@@ -2,7 +2,7 @@
 ''' Experiment to generate random location and sound corresponding to those location.
     The following attributes of sound are used to map the 3D location of the  real world:
         Y-Axis or Height (on the scale of -5 0 5 ) : with increasing Pitch of sound.
-        X-Axis or Direction (Left or Right) : with the channel.
+        X-Axis or Direction (Left or Right) : time duration of the signal within a channel.
         Z-Axis or Depth (on scale of -5 0 5 ) : with amplitude of sound for each channel.
     The produce soundScape for location is being used for training.
     A random test is conducted to check the accuracy of these mapping on Blindfolded people.
@@ -19,8 +19,19 @@ from itertools import *
 
 __author__ = 'luminous'
 
+#class for generating a random point in real world
+class Point:
+    def __init__(self,step=10,seed=0):
+        random.seed(seed)
+        low=-1*step
+        high=step
+        self.x=random.randint(low,high)
+        self.y=random.randint(low,high)
+        self.z=random.randint(low,high)
+
+
 class SoundScape:
-    def __init__(
+    def __init__(self,seed
 
 
 
