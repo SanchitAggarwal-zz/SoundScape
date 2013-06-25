@@ -16,8 +16,11 @@ import math
 import struct
 import argparse
 from itertools import *
-from numpy import linspace,sin,pi
-
+from numpy import linspace,sin,pi,int16
+import pygame
+import time
+from scipy.io.wavfile import write
+from pylab import plot,show,axis
 __author__ = 'luminous'
 
 #initial standard 13 tones from A-440 to A-880 increasing pitch
@@ -64,4 +67,23 @@ class SoundScape:
         self.frequency=self.pitch[point.y+step]
         self.amplitude=amp*math.pow(2,-1*point.z)
         sound=sin(2*pi*self.frequency*self.duration)*self.amplitude
-        return sound
+        return sound.astype(int16)
+
+# A tone, 2 seconds, 44100 samples per second
+X=Point()
+SS=SoundScape(pitch)
+sound = SS.generateSineWave(X)
+print X.x,X.y,X.z
+print sound
+print SS.pitch
+print SS.duration
+print SS.frequency
+print SS.amplitude
+write('440hzAtone.wav',44100,sound) # writing the sound to a file
+pygame.init()
+pygame.mixer.music.load("440hzAtone.wav")
+pygame.mixer.music.play()
+time.sleep(10)
+plot(SS.duration,sound)
+axis([0,0.4,15000,-15000])
+show()
