@@ -75,7 +75,7 @@ class SoundScape:
         return sound.astype(int16)
 
 # A tone, 2 seconds, 44100 samples per second
-X=Point(0,0,1)
+X=Point(1,1,0)
 SS=SoundScape(pitch)
 sound = SS.generateSineWave(X)
 print X.x,X.y,X.z
@@ -84,8 +84,12 @@ print "frequency ",SS.frequency
 print "amplitude ",SS.amplitude
 write('440hzAtone.wav',44100,sound) # writing the sound to a file
 pygame.init()
-pygame.mixer.music.load("440hzAtone.wav")
+'''pygame.mixer.music.load("440hzAtone.wav")
 pygame.mixer.music.play()
+print pygame.mixer.get_num_channels()
+'''
+snd=pygame.mixer.Sound("440hzAtone.wav")
+snd.play(1)
 time.sleep(10)
 plot(SS.duration,sound)
 axis([0,0.4,15000,-15000])
