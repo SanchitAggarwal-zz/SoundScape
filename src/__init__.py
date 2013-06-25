@@ -16,22 +16,49 @@ import math
 import struct
 import argparse
 from itertools import *
+from numpy import linspace,sin
 
 __author__ = 'luminous'
 
-#class for generating a random point in real world
+#class for generating a random point in real world  #call with initial values
+#For only X Point(1,0,0)
+#For only Y Point(0,1,0)
+#For only Z Point(0,0,1)
+
+#initial standard 13 tones from A-440 to A-880 increasing pitch
+pitch=[440,466,494,523,554,587,622,659,698,740,784,831,880]
+
 class Point:
-    def __init__(self,step=10,seed=0):
-        random.seed(seed)
+    def __init__(self,x=1,y=1,z=1,step=10):
         low=-1*step
         high=step
-        self.x=random.randint(low,high)
-        self.y=random.randint(low,high)
-        self.z=random.randint(low,high)
-
+        self.x=random.randint(low,high)*x
+        self.y=random.randint(low,high)*y
+        self.z=random.randint(low,high)*z
 
 class SoundScape:
-    def __init__(self,seed
+    def __init__(self,pitch,channel=2,rate=44100):
+
+        """
+        :param pitch: the standard pitch for sound
+        :param channel: the channel either Left or Right
+        :param rate: No of samples per seconds
+        """
+        self.pitch=pitch
+        self.channel=channel
+        self.rate=rate
+
+    def generateSineWave(self, point):
+        """
+        :param point: sine wave corresponding to the 3D point
+        """
+        self.length=math.fabs(point.x)
+        self.duration=linspace(0,self.length,self.length*self.rate)
+        self.sound=sin(2*pi)
+def note(freq, len, amp=1, rate=44100):
+ t = linspace(0,len,len*rate)
+ data = sin(2*pi*freq*t)*amp
+ return data.astype(int16) # two byte integers
 
 
 
@@ -98,3 +125,4 @@ def mergeDatasets(toMerge,numDatasets,indicesToMerge):      # Merge the datasets
         merge_index=int(indicesToMerge[i])
         merged_set.Data+=toMerge[merge_index].Data
      return merged_set
+     '''
