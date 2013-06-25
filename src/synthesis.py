@@ -45,40 +45,43 @@ class Point:
         self.z=random.randint(low,high)*z
 
 class SoundScape:
-    def __init__(self,pitch,channel=2,rate=44100):
+    def __init__(self,pitch,rate=44100):
 
         """
         :param pitch: the standard pitch for sound
-        :param channel: the channel either Left or Right
         :param rate: No of samples per seconds
         """
         self.pitch=pitch
-        self.channel=channel
         self.rate=rate
 
     def generateSineWave(self, point,amp=1000,step=5):
         """
-        :param amp: amplitude of the sound signal,initial vale 1000 which varies with depth
+        :rtype : sound, the resultant tone
+        :param amp: amplitude of the sound signal,initial vale 1000 which increases with depth
         :param step: scale size for each coordinate
         :param point: sine wave corresponding to the 3D point
+        :param channel: the channel either Left or Right
         """
-        self.length=math.fabs(point.x)
+        self.length=1+math.fabs(point.x)
+        if point.x < 0 :
+            self.channel=1
+        elif point.x > 0 :
+            self.channel=2
+
         self.duration=linspace(0,self.length,self.length*self.rate)
         self.frequency=self.pitch[point.y+step]
-        self.amplitude=amp*math.pow(2,-1*point.z)
+        self.amplitude=amp*math.pow(2,point.z+step)
         sound=sin(2*pi*self.frequency*self.duration)*self.amplitude
         return sound.astype(int16)
 
 # A tone, 2 seconds, 44100 samples per second
-X=Point()
+X=Point(0,0,1)
 SS=SoundScape(pitch)
 sound = SS.generateSineWave(X)
 print X.x,X.y,X.z
-print sound
-print SS.pitch
-print SS.duration
-print SS.frequency
-print SS.amplitude
+print "duration ",SS.duration
+print "frequency ",SS.frequency
+print "amplitude ",SS.amplitude
 write('440hzAtone.wav',44100,sound) # writing the sound to a file
 pygame.init()
 pygame.mixer.music.load("440hzAtone.wav")
