@@ -54,7 +54,7 @@ class SoundScape:
         self.pitch=pitch
         self.rate=rate
 
-    def generateSineWave(self, point,amp=1000,step=5):
+    def generateSineWave(self, point,amp=10000,step=5):
         """
         :rtype : sound, the resultant tone
         :param amp: amplitude of the sound signal,initial vale 1000 which increases with depth
@@ -75,7 +75,7 @@ class SoundScape:
         return sound.astype(int16)
 
 # A tone, 2 seconds, 44100 samples per second
-X=Point(1,1,0)
+X=Point(1,0,0)
 SS=SoundScape(pitch)
 sound = SS.generateSineWave(X)
 print X.x,X.y,X.z
@@ -94,3 +94,6 @@ time.sleep(10)
 plot(SS.duration,sound)
 axis([0,0.4,15000,-15000])
 show()
+
+
+
