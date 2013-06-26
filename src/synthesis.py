@@ -21,6 +21,8 @@ import pygame
 import time
 from scipy.io.wavfile import write
 from pylab import plot,show,axis
+import time
+
 __author__ = 'luminous'
 
 #initial standard 13 tones from A-440 to A-880 increasing pitch
@@ -89,7 +91,17 @@ pygame.mixer.music.play()
 print pygame.mixer.get_num_channels()
 '''
 snd=pygame.mixer.Sound("440hzAtone.wav")
-snd.play(1)
+channel=snd.play()
+s = int(snd.get_length())
+print snd.get_num_channels()
+print s
+for i in range(0,s):
+    if i < 2:
+        channel.set_volume(0,0)
+    else:
+        channel.set_volume(0,0)
+print snd.get_volume()
+
 time.sleep(10)
 plot(SS.duration,sound)
 axis([0,0.4,15000,-15000])
