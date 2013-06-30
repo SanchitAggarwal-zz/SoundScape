@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #install pygraphics
-svn checkout http://pygraphics.googlecode.com/svn/trunk/
+svn checkout https://pygraphics.googlecode.com/svn/trunk/
 cd trunk
 sudo python setup.py install --user
 
