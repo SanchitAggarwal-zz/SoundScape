@@ -21,6 +21,7 @@ import pygame
 import time
 from scipy.io.wavfile import write
 from pylab import plot,show,axis
+from enum import Enum
 import time
 
 __author__ = 'luminous'
@@ -33,18 +34,23 @@ pitch=[440,466,494,523,554,587,622,659,698,740,784,831,880]
 #For only Y Point(0,1,0)
 #For only Z Point(0,0,1)
 class Point:
-    def __init__(self,x=1,y=1,z=1,step=5):
+    def __init__(self,x=1,y=1,z=1,step=5,mode=0):
         """
+        :param mode: Training Mode = 0, Testing Mode = 1, for generating random numbers
         :param x: X coordinate for channel and duration
         :param y: Y coordinate for pitch
         :param z: Z coordinate for amplitude
         :param step:scale size for each coordinate
         """
-        low=-1*step
-        high=step
-        self.x=random.randint(low,high)*x
-        self.y=random.randint(low,high)*y
-        self.z=random.randint(low,high)*z
+        if mode == 0:
+            self.x=x
+            self.y=y
+            self.z=z
+        elif mode == 1:
+            self.x=random.randint(-1*step,step)*x
+            self.y=random.randint(0,2*step)*y
+            self.z=random.randint(0,2*step)*z
+
 
 class SoundScape:
     def __init__(self,pitch,rate=44100):
@@ -55,8 +61,10 @@ class SoundScape:
         """
         self.pitch=pitch
         self.rate=rate
+        self.Left=1
+        self.Right=1
 
-    def generateSineWave(self, point,amp=10000,step=5):
+    def generateSineWave(self, point,amp=1000,step=5):
         """
         :rtype : sound, the resultant tone
         :param amp: amplitude of the sound signal,initial vale 1000 which increases with depth
@@ -64,12 +72,12 @@ class SoundScape:
         :param point: sine wave corresponding to the 3D point
         :param channel: the channel either Left or Right
         """
-        self.length=1+math.fabs(point.x)
         if point.x < 0 :
-            self.channel=1
+            self.Right=0   #set the right speaker volume to zero
         elif point.x > 0 :
-            self.channel=2
+            self.Left=0    #set the left speaker volume to zero
 
+        self.length=1+math.fabs(point.x)
         self.duration=linspace(0,self.length,self.length*self.rate)
         self.frequency=self.pitch[point.y+step]
         self.amplitude=amp*math.pow(2,point.z+step)
@@ -80,10 +88,7 @@ class SoundScape:
 X=Point(1,0,0)
 SS=SoundScape(pitch)
 sound = SS.generateSineWave(X)
-print X.x,X.y,X.z
-print "duration ",SS.duration
-print "frequency ",SS.frequency
-print "amplitude ",SS.amplitude
+
 write('440hzAtone.wav',44100,sound) # writing the sound to a file
 pygame.init()
 '''pygame.mixer.music.load("440hzAtone.wav")
