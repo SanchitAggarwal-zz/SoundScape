@@ -77,10 +77,10 @@ class SoundScape:
         elif point.x > 0 :
             self.Left=0    #set the left speaker volume to zero
 
-        self.length=1+math.fabs(point.x)
+        self.length=1#+math.fabs(point.x)
         self.duration=linspace(0,self.length,self.length*self.rate)
         self.frequency=self.pitch[point.y]
-        self.amplitude=amp*2*(point.z+1)   #double the amplitude for 6db difference
+        self.amplitude=amp*(point.z+1)   #double the amplitude for 6db difference
         sound=sin(2*pi*self.frequency*self.duration)*self.amplitude
         return sound.astype(int16)
 
@@ -125,16 +125,19 @@ def Experiment(x,y,z, low, high):
             time.sleep(1)
 
 # Experiment for X axis,generate a tone, X seconds,420 frequency 6dB amplitude 44100 samples per second
-print "Experiment for X axis,generate a tone, X seconds,420 frequency 6dB amplitude 44100 samples per second"
-Experiment(1,0,0,-5,5)
+#print "Experiment for X axis,generate a tone, X seconds,420 frequency 6dB amplitude 44100 samples per second"
+#Experiment(1,0,0,-5,5)
 
 # Experiment for Y axis,generate a tone, 1 seconds,Y frequency 6dB amplitude 44100 samples per second
-print "Experiment for Y axis,generate a tone, 1 seconds,Y frequency 6dB amplitude 44100 samples per second"
-#xperiment(0,1,0,0,11)
+#print "Experiment for Y axis,generate a tone, 1 seconds,Y frequency 6dB amplitude 44100 samples per second"
+Experiment(0,1,0,0,11)
 
 # Experiment for Z axis,generate a tone, 1 seconds,420 frequency Z*6 dB amplitude 44100 samples per second
-print "Experiment for Z axis,generate a tone, 1 seconds,420 frequency Z*6 dB amplitude 44100 samples per second"
-#xperiment(0,0,1,0,11)
+#print "Experiment for Z axis,generate a tone, 1 seconds,420 frequency Z*6 dB amplitude 44100 samples per second"
+#Experiment(0,0,1,0,11)
+
+#print "Experiment for Random Point and corresponding tone 44100 samples per second"
+#Experiment(1,1,1,0,5)
 
 
 '''time.sleep(10)
