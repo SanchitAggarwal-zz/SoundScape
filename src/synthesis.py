@@ -25,10 +25,6 @@ from enum import Enum
 import time
 
 __author__ = 'luminous'
-
-#initial standard 13 tones from A-440 to A-880 increasing pitch
-pitch=[440,466,494,523,554,587,622,659,698,740,784,831,880]
-
 #class for generating a random point in real world  #call with initial values
 #For only X Point(1,0,0)
 #For only Y Point(0,1,0)
@@ -53,18 +49,19 @@ class Point:
 
 
 class SoundScape:
-    def __init__(self,pitch,rate=44100):
+    def __init__(self,rate=44100):
 
         """
         :param pitch: the standard pitch for sound
         :param rate: No of samples per seconds
         """
-        self.pitch=pitch
+        #initial standard 13 tones from A-440 to A-880 increasing pitch
+        self.pitch=[440,466,494,523,554,587,622,659,698,740,784,831,880]
         self.rate=rate
         self.Left=1
         self.Right=1
 
-    def generateSineWave(self, point,amp=1000,step=5):
+    def generateSineWave(self, point,amp=1000):
         """
         :rtype : sound, the resultant tone
         :param amp: amplitude of the sound signal,initial vale 1000 which increases with depth
@@ -79,38 +76,34 @@ class SoundScape:
 
         self.length=1+math.fabs(point.x)
         self.duration=linspace(0,self.length,self.length*self.rate)
-        self.frequency=self.pitch[point.y+step]
-        self.amplitude=amp*math.pow(2,point.z+step)
-        sound=sin(2*pi*self.frequency*self.duration)*self.amplitude
+        self.frequency=self.pitch[point.y]
+        self.amplitude=amp*2*(point.z+1)
+        sound=sin(2*pi*self.frequency*self.duration)*self.amplitude+sin(4*pi*self.frequency*self.duration)*self.amplitude
         return sound.astype(int16)
 
-# A tone, 2 seconds, 44100 samples per second
-X=Point(1,0,0)
-SS=SoundScape(pitch)
-sound = SS.generateSineWave(X)
 
-write('440hzAtone.wav',44100,sound) # writing the sound to a file
-pygame.init()
+# Experiment for X axis,generate a tone, X seconds, 44100 samples per second
+for i in range(0,4):
+    X=Point(0,8,i)
+    SS=SoundScape()
+    sound = SS.generateSineWave(X)
+    print i,SS.amplitude
+    write('example.wav',44100,sound) # writing the sound to a file
+    pygame.init()
+    snd=pygame.mixer.Sound("example.wav")
+    channel=snd.play()
+    channel.set_volume(SS.Left,SS.Right)
+    time.sleep(1)
+
+'''time.sleep(10)
+plot(SS.duration,sound)
+axis([0,0.4,15000,-15000])
+show()'''
+
+
+
 '''pygame.mixer.music.load("440hzAtone.wav")
 pygame.mixer.music.play()
 print pygame.mixer.get_num_channels()
 '''
-snd=pygame.mixer.Sound("440hzAtone.wav")
-channel=snd.play()
-s = int(snd.get_length())
-print snd.get_num_channels()
-print s
-for i in range(0,s):
-    if i < 2:
-        channel.set_volume(0,0)
-    else:
-        channel.set_volume(0,0)
-print snd.get_volume()
-
-time.sleep(10)
-plot(SS.duration,sound)
-axis([0,0.4,15000,-15000])
-show()
-
-
-
+print 10*math.log(2,10)
