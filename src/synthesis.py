@@ -130,14 +130,14 @@ def Experiment(x,y,z, low, high):
 
 # Experiment for Y axis,generate a tone, 1 seconds,Y frequency 6dB amplitude 44100 samples per second
 #print "Experiment for Y axis,generate a tone, 1 seconds,Y frequency 6dB amplitude 44100 samples per second"
-Experiment(0,1,0,0,11)
+#Experiment(0,1,0,0,11)
 
 # Experiment for Z axis,generate a tone, 1 seconds,420 frequency Z*6 dB amplitude 44100 samples per second
 #print "Experiment for Z axis,generate a tone, 1 seconds,420 frequency Z*6 dB amplitude 44100 samples per second"
 #Experiment(0,0,1,0,11)
 
 #print "Experiment for Random Point and corresponding tone 44100 samples per second"
-#Experiment(1,1,1,0,5)
+Experiment(1,1,1,0,10)
 
 
 '''time.sleep(10)
