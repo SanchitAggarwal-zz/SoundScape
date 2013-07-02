@@ -3,16 +3,18 @@ from forms import InformationForm
 
 app = Flask(__name__)
 app.secret_key = 'experiment@2013'
+CSRF_ENABLED = True
 
 @app.route('/',methods=['GET','POST'])
 def home():
     form=InformationForm()
     if request.method == 'POST':
-        if not form.validate():
+        if form.validate():
+            return 'Form Posted.'
+        else:
+            print form.errors
             flash('All fields are required.')
             return render_template('home.html', form=form)
-        else:
-            return 'Form Posted.'
     elif request.method == 'GET':
         return render_template('home.html',form=form)
 

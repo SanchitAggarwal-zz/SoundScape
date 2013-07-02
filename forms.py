@@ -2,11 +2,11 @@
 from flask.ext.wtf import Form, TextField, RadioField, IntegerField, SelectField, SubmitField,validators, ValidationError
 
 class InformationForm(Form):
-    firstname = TextField("First Name",[validators.Required()])
-    lastname = TextField("Last Name",[validators.Required()])
-    gender = SelectField("Gender", choices = [(1,'Male'),(2,'Female')])
-    age = IntegerField("Age")
-    blindtype = SelectField("Blind Type",choices=[(1,'Congential'),(2,'Accidental'),(3,'Non-Blind')])
-    email = TextField("Email",[validators.Required(),validators.Email()])
-    contact = IntegerField("Contact",[validators.Required()])
+    firstname = TextField("First Name",[validators.Required("First Name Required")])
+    lastname = TextField("Last Name",[validators.Required("Last Name Required")])
+    age = IntegerField("Age",[validators.Required("Age Required")])
+    email = TextField("Email",[validators.Required("Email Required"),validators.Email("abc@company.com")])
+    contact = IntegerField("Contact",[validators.Required("Contact Required")])
+    gender = SelectField(u'Gender', choices = [('1','Male'),('2','Female')])
+    blindtype = SelectField(u'Blind Type',choices=[('1','Congential'),('2','Accidental'),('3','Non-Blind')])
     submit = SubmitField("Send")
