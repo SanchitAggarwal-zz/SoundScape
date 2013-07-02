@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from forms import InformationForm
 
 app = Flask(__name__)
@@ -8,7 +8,11 @@ app.secret_key = 'experiment@2013'
 def home():
     form=InformationForm()
     if request.method == 'POST':
-        return 'Form Posted.'
+        if not form.validate():
+            flash('All fields are required.')
+            return render_template('home.html', form=form)
+        else:
+            return 'Form Posted.'
     elif request.method == 'GET':
         return render_template('home.html',form=form)
 

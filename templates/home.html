@@ -1,39 +1,45 @@
 {% extends "layout.html" %}
+
 {% block content %}
-  <div class="jumbo">
-    <h2>Welcome to the Sound Scape Experiment<h2>
-  </div>
-  <form action="{{ url_for('home') }}" method=post>
-  <h3>Please Enter the required information<h3>
-  <h6>
-    {{ form.hidden_tag() }}
+  <h2>Contact</h2>
 
-    {{ form.firstname.label }}
-    {{ form.firstname }}
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
 
-    {{ form.lastname.label }}
-    {{ form.lastname }}
-
-    {% for subfield in form.gender %}
-        <tr>
-            <td>{{ subfield }}</td>
-            <td>{{ subfield.label }}</td>
-        </tr>
-    {% endfor %}
-
-    {{ form.age.label }}
-    {{ form.age }}
-
-    {{ form.blindtype.label }}
-    {{ form.blindtype }}
-
-    {{ form.email.label }}
-    {{ form.email }}
-
-    {{ form.contact.label }}
-    {{ form.contact }}
-
-    {{ form.submit }}
-   <h6>
+    <h3>Please Enter Your Information<h3>
+    <form action="{{ url_for('home') }}" method=post>
+    <table>
+    <tr><td>{{ form.hidden_tag() }}</td></tr>
+    <tr>
+        <td>{{ form.firstname.label }}</td>
+        <td>{{ form.firstname }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.lastname.label }}</td>
+        <td>{{ form.lastname }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.gender.label }}</td>
+        <td>{{ form.gender }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.age.label }} </td>
+        <td>{{ form.age }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.blindtype.label }} </td>
+        <td>{{ form.blindtype }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.email.label }} </td>
+        <td>{{ form.email }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.contact.label }} </td>
+        <td>{{ form.contact }}</td>
+    </tr>
+    <tr><td>{{ form.submit }}</td></tr>
+   </table>
   </form>
 {% endblock %}
