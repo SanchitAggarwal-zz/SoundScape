@@ -1,9 +1,12 @@
 #Creating python form for information about the Tester
-
-
-from flask.ext.wtf import Form, TextField, TextAreaField, SubmitField
+from flask.ext.wtf import Form, TextField, RadioField, IntegerField, SelectField, SubmitField,validators, ValidationError
 
 class InformationForm(Form):
-    name=TextField("Name")
-    email=TextField("Email")
+    firstname = TextField("FirstName")
+    lastname = TextField("LastName")
+    gender = RadioField("Gender", choices = ['Male', 'Female'])
+    age = IntegerField("Age")
+    blindtype = SelectField("BlindType",choices=['Congential','Accidental','Non-Blind'])
+    email = TextField("Email")
+    contact = IntegerField("Contact")
     submit = SubmitField("Send")
