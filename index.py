@@ -1,22 +1,21 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from forms import InformationForm
 
 app = Flask(__name__)
-app.secret_key= 'experiment@2013'
+app.secret_key = 'experiment@2013'
+
+@app.route('/',methods=['GET','POST'])
+def home():
+    form=InformationForm()
+    if request.method == 'POST':
+        return 'Form Posted.'
+    elif request.method == 'GET':
+        return render_template('home.html',form=form)
 
 @app.route('/training')
 def training():
-    """
 
-
-    :return:
-    """
-    return "Training"
-
-@app.route('/')
-def home():
-    form=InformationForm()
-    return render_template('home.html',form=form)
+     return render_template('training.html')
 
 @app.route('/testing')
 def testing():
