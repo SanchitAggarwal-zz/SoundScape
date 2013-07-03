@@ -7,6 +7,6 @@ class InformationForm(Form):
     age = IntegerField("Age",[validators.Required("Age Required")])
     email = TextField("Email",[validators.Required("Email Required"),validators.Email("abc@company.com")])
     contact = IntegerField("Contact",[validators.Required("Contact Required")])
-    gender = SelectField(u'Gender', choices = [('1','Male'),('2','Female')])
-    blindtype = SelectField(u'Blind Type',choices=[('1','Congential'),('2','Accidental'),('3','Non-Blind')])
+    gender = SelectField(u'Gender', choices = [('Male','Male'),('Female','Female')])
+    blindtype = SelectField(u'Blind Type',choices=[('Congential','Congential'),('Accidental','Accidental'),('Non-Blind','Non-Blind')])
     submit = SubmitField("Send")
