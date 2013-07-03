@@ -3,4 +3,12 @@
 {% block content %}
   <h2>Training</h2>
   <p>Click on Start to begin Training</p>
+  <audio id="player" src="{{ url_for('static', filename='resource/training.wav') }}"></audio>
+  <!--<audio id="player" src="static/resource/training.wav"></audio> this is also working-->
+    <div>
+    <button onclick="document.getElementById('player').play()">Play</button>
+    <button onclick="document.getElementById('player').pause()">Pause</button>
+    <button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
+    <button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
+    </div>
 {% endblock %}

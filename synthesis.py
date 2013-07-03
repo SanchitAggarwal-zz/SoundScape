@@ -29,6 +29,8 @@ __author__ = 'luminous'
 #For only X Point(1,0,0)
 #For only Y Point(0,1,0)
 #For only Z Point(0,0,1)
+filename="static/resource/training.wav"
+
 class Point:
     def __init__(self,x=1,y=1,z=1,step=5,mode=0):
         """
@@ -102,9 +104,9 @@ def Experiment(x,y,z, low, high):
             X=Point(1,1,1,5,1)
             SS=SoundScape()
             sound = SS.generateSineWave(X)
-            write('example.wav',44100,sound) # writing the sound to a file
+            write(filename,44100,sound) # writing the sound to a file
             pygame.init()
-            snd=pygame.mixer.Sound("example.wav")
+            snd=pygame.mixer.Sound(filename)
             channel=snd.play()
             channel.set_volume(SS.Left,SS.Right)
             print X.write()
@@ -115,9 +117,9 @@ def Experiment(x,y,z, low, high):
             X=Point(i*x,i*y,i*z)
             SS=SoundScape()
             sound = SS.generateSineWave(X)
-            write('example.wav',44100,sound) # writing the sound to a file
+            write(filename,44100,sound) # writing the sound to a file
             pygame.init()
-            snd=pygame.mixer.Sound("example.wav")
+            snd=pygame.mixer.Sound(filename)
             channel=snd.play()
             channel.set_volume(SS.Left,SS.Right)
             print X.write()
@@ -137,7 +139,7 @@ def Experiment(x,y,z, low, high):
 #Experiment(0,0,1,0,11)
 
 #print "Experiment for Random Point and corresponding tone 44100 samples per second"
-Experiment(1,1,1,0,10)
+#Experiment(1,1,1,0,10)
 
 
 '''time.sleep(10)

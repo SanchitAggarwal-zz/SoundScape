@@ -1,22 +1,25 @@
 from flask import Flask, render_template, request, flash
 from forms import InformationForm
 import csv
-import xlwt
+import synthesis
+#import xlwt
+
 
 app = Flask(__name__)
 app.secret_key = 'experiment@2013'
 CSRF_ENABLED = True
+#Information = False
 
 def save(row):
     csvfile=open("Experiment.xls","a")
     writer = csv.writer(csvfile)
     writer.writerow(row)
 
-    workbook = xlwt.Workbook()
+    '''workbook = xlwt.Workbook()
     worksheet = workbook.add_sheet('UserInfo')
     for i in range(0,len(row)):
         worksheet.write(0,i,row[i])
-    workbook.save('Experiment2.xls')
+    workbook.save('Experiment2.xls')'''
 
 @app.route('/',methods=['GET','POST'])
 def home():
@@ -32,6 +35,8 @@ def home():
             row.append(form.email.data)
             row.append(form.contact.data)
             save(row)#.gender.choices[form.gender.data])
+            #Information=True
+            synthesis.Experiment(1,1,1,0,1)
             return render_template('training.html')
         else:
             print form.errors
@@ -42,8 +47,15 @@ def home():
 
 @app.route('/training')
 def training():
-
-     return render_template('training.html')
+    synthesis.Experiment(1,1,1,0,1)
+    return render_template('training.html')
+    '''if Information:
+        print Information
+        return render_template('training.html')
+    else:
+        print Information
+        form=InformationForm()
+        return render_template('home.html',form=form)'''
 
 @app.route('/testing')
 def testing():
