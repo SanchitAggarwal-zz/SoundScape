@@ -89,3 +89,19 @@ function play(audio) {
   }
   audio.play();
 }
+
+
+
+function generateTone(freq, balance,sampleRate) {
+  var samples = Math.round(sampleRate / freq),
+  data = new Float32Array(samples *2),
+  var sample, i;
+
+  for (i = 0; i < samples; i++) {
+    sample = Math.sin(Math.PI * 2 * i / samples);
+    data[i * 2] = sample * (0.5 - balance);
+    data[i * 2 + 1] = sample * (0.5 + balance);
+  }
+
+  return data;
+}
