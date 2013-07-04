@@ -3,7 +3,7 @@ function audioControl(){
     var sound=document.getElementById('player');
     sound.balance=-1;
     sound.play();
-}
+};
 
 function abcTest(){
     alert('abc123');

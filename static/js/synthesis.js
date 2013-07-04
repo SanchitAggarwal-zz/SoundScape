@@ -18,12 +18,12 @@ function Point(x,y,z){
 };
 
 function generateSineWave(point,sampleRate,amp){
-    var wave4 = new RIFFWAVE();   //riffwave variable
+    var wave = new RIFFWAVE();   //riffwave variable
     var data = [];
     var seconds = 1;
-    wave4.header.sampleRate = sampleRate;
-    wave4.header.numChannels = 2;
-    wave4.header.bitsPerSample = 16;
+    wave.header.sampleRate = sampleRate;
+    wave.header.numChannels = 2;
+    wave.header.bitsPerSample = 16;
     var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
@@ -36,15 +36,20 @@ function generateSineWave(point,sampleRate,amp){
         data[i++] = sample * (0.5 - balance);
         data[i++] = sample * (0.5 + balance);
     }
-    wave4.Make(data);
-    var audio4 = new Audio(wave4.dataURI);
-    return audio4;
+    wave.Make(data);
+    var audio = new Audio(wave.dataURI);
+    audio.play();
+    return audio;
 };
 
 function test(){
     alert("in test");
-    var point = new Point(1,0,0);
+    var point = new Point(-5,1,1);
     var audio = generateSineWave(point,44100,1000);
+    if (!audio.paused) { // if playing stop and rewind
+    audio.pause();
+    audio.currentTime = 0;
+  }
     audio.play();
 };
 
