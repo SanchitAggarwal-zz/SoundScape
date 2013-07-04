@@ -47,7 +47,7 @@ def home():
 
 @app.route('/training')
 def training():
-    synthesis.Experiment(1,1,1,0,1)
+    #synthesis.Experiment(-5,1,1,0,1)
     return render_template('training.html')
     '''if Information:
         print Information

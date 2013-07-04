@@ -84,6 +84,7 @@ class SoundScape:
         self.frequency=self.pitch[point.y]
         self.amplitude=amp*(point.z+1)   #double the amplitude for 6db difference
         sound=sin(2*pi*self.frequency*self.duration)*self.amplitude
+        print sound
         return sound.astype(int16)
 
     def write(self):

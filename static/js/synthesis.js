@@ -28,29 +28,29 @@ function generateSineWave(point,sampleRate,amp){
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
     var balance = point.x/10;
-
+    alert(balance);
+    var sample=0;
     //generation of data for tone
-    for (var i = 0; i < wave.header.sampleRate * seconds; i ++) {
-        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / wave.header.sampleRate)*amplitude);
+    for (var i = 0; i < wave.header.sampleRate * seconds;) {
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / wave.header.sampleRate))*amplitude;
         //setting the pan for each channel
         data[i++] = sample * (0.5 - balance);
         data[i++] = sample * (0.5 + balance);
     }
+    alert(data);
     wave.Make(data);
     var audio = new Audio(wave.dataURI);
-    audio.play();
-    return audio;
-};
-
-function test(){
-    alert("in test");
-    var point = new Point(-5,1,1);
-    var audio = generateSineWave(point,44100,1000);
     if (!audio.paused) { // if playing stop and rewind
     audio.pause();
     audio.currentTime = 0;
   }
     audio.play();
+};
+
+function test(){
+    alert("in test");
+    var point = new Point(-5,1,1);
+    generateSineWave(point,44100,1000);
 };
 
 function Experiment(mode){
