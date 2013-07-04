@@ -15,7 +15,7 @@ function Point(x,y,z){
     this.x=x;
     this.y=y;
     this.z=z;
-}
+};
 
 function generateSineWave(point,sampleRate,amp){
     var wave4 = new RIFFWAVE();   //riffwave variable
@@ -38,15 +38,15 @@ function generateSineWave(point,sampleRate,amp){
     }
     wave4.Make(data);
     var audio4 = new Audio(wave4.dataURI);
-    return audio;
-}
+    return audio4;
+};
 
 function test(){
     alert("in test");
     var point = new Point(1,0,0);
     var audio = generateSineWave(point,44100,1000);
     audio.play();
-}
+};
 
 function Experiment(mode){
     switch (mode){
@@ -57,7 +57,7 @@ function Experiment(mode){
     }
     var audio = generateSineWave(1000);
     audio.play();
-}
+};
 
 /*
 function play(audio) {

@@ -4,3 +4,7 @@ function audioControl(){
     sound.balance=-1;
     sound.play();
 }
+
+function abcTest(){
+    alert('abc123');
+}
