@@ -79,7 +79,7 @@ class SoundScape:
         elif point.x > 0 :
             self.Left=0    #set the left speaker volume to zero
 
-        self.length=1#+math.fabs(point.x)
+        self.length=1#+math.fabs(point.x)  // 1 sec tone generation
         self.duration=linspace(0,self.length,self.length*self.rate)
         self.frequency=self.pitch[point.y]
         self.amplitude=amp*(point.z+1)   #double the amplitude for 6db difference
