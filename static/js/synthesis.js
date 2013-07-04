@@ -1,6 +1,73 @@
-//shifting to javascript synthesis as no panning for html5 audio tag, hence to generate the sound with riffwave.js
+//Shifting to javascript synthesis as no panning for html5 audio tag, hence to generate the sound with riffwave.js
 
-var data = [],
+/*Experiment to generate random location and sound corresponding to those location.
+    The following attributes of sound are used to map the 3D location of the  real world:
+        Y-Axis or Height (on the scale of 1 10 ) : with increasing Pitch of sound.
+        X-Axis or Direction (Left or Right scale of -5 0 5) : Panning of sound on the 2 channel.
+        Z-Axis or Depth (on scale of 1 10 ) : with amplitude of sound for each channel difference of 3dB for each step.
+    The produce soundScape for location is being used for training.
+    A random test is conducted to check the accuracy of these mapping on Blindfolded people.
+    Furthermore Color is also represented using different frequency for each sound.
+*/
+
+//function for 3D point
+function Point(x,y,z){
+    this.x=x;
+    this.y=y;
+    this.z=z;
+}
+
+function generateSineWave(point,sampleRate,amp){
+    var wave4 = new RIFFWAVE();   //riffwave variable
+    var data = [];
+    var seconds = 1;
+    wave4.header.sampleRate = sampleRate;
+    wave4.header.numChannels = 2;
+    wave4.header.bitsPerSample = 16;
+    var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
+    var frequencyHz = pitch[point.y];
+    var amplitude = amp*point.z;
+    var balance = point.x/10;
+
+    //generation of data for tone
+    for (var i = 0; i < wave.header.sampleRate * seconds; i ++) {
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / wave.header.sampleRate)*amplitude);
+        //setting the pan for each channel
+        data[i++] = sample * (0.5 - balance);
+        data[i++] = sample * (0.5 + balance);
+    }
+    wave4.Make(data);
+    var audio4 = new Audio(wave4.dataURI);
+    return audio;
+}
+
+function test(){
+    alert("in test");
+    var point = new Point(1,0,0);
+    var audio = generateSineWave(point,44100,1000);
+    audio.play();
+}
+
+function Experiment(mode){
+    switch (mode){
+        case "Training":
+            break;
+        case "Testing":
+            break;
+    }
+    var audio = generateSineWave(1000);
+    audio.play();
+}
+
+/*
+function play(audio) {
+  if (!audio.paused) { // if playing stop and rewind
+    audio.pause();
+    audio.currentTime = 0;
+  }
+  audio.play();
+}*/
+ /*var data = [],
 		sampleRateHz = 44100,
 
 		//Notes sequence, play with it ;)
@@ -12,96 +79,4 @@ var data = [],
 			return r;
 		};
 
-//Fill up the sound data!!
-for(var j = 0; j < 2*sampleRateHz; j++) {
-	var l = 2*sampleRateHz / notes.length;
-	data[j] = 64 + 32 * Math.round(Math.sin(baseFreq(Math.round(j/l)) * j));
-}
-
-//Riffwave stuff
-var wave = new RIFFWAVE();
-wave.header.sampleRate = sampleRateHz;
-wave.header.numChannels = 1;
-wave.Make(data);
-var audio = new Audio();
-audio.src=wave.dataURI;
-
-
-function generateSineWave(x,y,z,sampleRate)
-function simHertz(hz) {
-    var audio = new Audio();
-    var wave = new RIFFWAVE();
-    var data = [];
-
-    wave.header.sampleRate = 44100;
-
-    var seconds = 1;
-
-    for (var i = 0; i < wave.header.sampleRate * seconds; i ++) {
-        data[i] = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * hz / wave.header.sampleRate));
-    }
-
-    wave.Make(data);
-    audio.src = wave.dataURI;
-    return audio;
-}
-
-var audio = simHertz(1000);
-audio.play();
-
-
-
-
-// SINE WAVE
-var sine = []; for (var i=0; i<10000; i++) sine[i] = 128+Math.round(127*Math.sin(i/5));
-var wave2 = new RIFFWAVE(sine);
-var audio2 = new Audio(wave2.dataURI);
-
-// EFFECT
-var effect = []; for (var i=0; i<35000; i++) effect[i] = 64+Math.round(32*(Math.cos(i*i/2000)+Math.sin(i*i/4000)));
-var wave3 = new RIFFWAVE();
-wave3.header.sampleRate = 22000;
-wave3.Make(effect);
-var audio3 = new Audio(wave3.dataURI);
-
-// STEREO
-var wave4 = new RIFFWAVE();
-wave4.header.sampleRate = 22000;
-wave4.header.numChannels = 2;
-wave4.header.bitsPerSample = 16;
-var i = 0;
-var stereo = [];
-while (i<100000) {
-  stereo[i++] = 0;
-  stereo[i++] = 0x8000+Math.round(0x7fff*Math.sin(i/25));
-}
-while (i<200000) {
-  stereo[i++] = 0x8000+Math.round(0x7fff*Math.sin(i/100));
-  stereo[i++] = 0;
-}
-wave4.Make(stereo);
-var audio4 = new Audio(wave4.dataURI);
-
-function play(audio) {
-  if (!audio.paused) { // if playing stop and rewind
-    audio.pause();
-    audio.currentTime = 0;
-  }
-  audio.play();
-}
-
-
-
-function generateTone(freq, balance,sampleRate) {
-  var samples = Math.round(sampleRate / freq),
-  data = new Float32Array(samples *2),
-  var sample, i;
-
-  for (i = 0; i < samples; i++) {
-    sample = Math.sin(Math.PI * 2 * i / samples);
-    data[i * 2] = sample * (0.5 - balance);
-    data[i * 2 + 1] = sample * (0.5 + balance);
-  }
-
-  return data;
-}
+*/
