@@ -12,7 +12,10 @@ class InformationForm(Form):
     submit = SubmitField("Send")
 
 class TestForm(Form):
-    attempt=IntegerField("Attempt")
-    wrong=IntegerField("Wrong")
     correct=IntegerField("Correct")
-    submit=SubmitField("Done")
+    wrong=IntegerField("Wrong")
+    attempt=IntegerField("Attempt")
+    done=SubmitField("Done")
+
+class TrainingForm(Form):
+        done=SubmitField("Done")

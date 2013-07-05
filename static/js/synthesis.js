@@ -113,6 +113,16 @@ function testing(){
             wrong++;
             alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
+        var attempt=document.getElementsByName("attempt");
+        attempt.val=count;
+        attempt.disabled=true;
+        var correctInput=document.getElementsByName("correct");
+        correctInput.val=correct;
+        correctInput.disabled=true;
+        var wrongInput=document.getElementsByName("wrong");
+        wrongInput.val=wrong;
+        wrongInput.disabled=true;
+
     }
 };
 

@@ -49,6 +49,12 @@
                 <legend>Generate The Corresponding Tone for selected X,Y,Z</legend>
                 <button onclick="training();">Play</button>
     </fieldset>
+    <form action="{{ url_for('training') }}" method=post>
+    <table>
+    <tr><td>{{ form.hidden_tag() }}</td></tr>
+    <tr><td>{{ form.done }}</td></tr>
+    </table>
+  </form>
 {% endblock %}
 
 <!--<audio id="player" src="{{ url_for('static', filename='resource/training.wav') }}"></audio>
