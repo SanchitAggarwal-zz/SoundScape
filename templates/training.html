@@ -2,14 +2,61 @@
 
 {% block content %}
   <h2>Training</h2>
-  <p>Click on Start to begin Training</p>
-  <audio id="player" src="{{ url_for('static', filename='resource/training.wav') }}"></audio>
-  <!--<audio id="player" src="static/resource/training.wav"></audio> this is also working-->
+  <p>Select the X, Y and Z axis and Click on Play to hear corresponding Tone</p>
+  <fieldset>
+            <legend>X axis or Pan </legend>
+                    <input type="radio" name="X" value="-5" />-5
+                    <input type="radio" name="X" value="-4" />-4
+                    <input type="radio" name="X" value="-3" />-3
+                    <input type="radio" name="X" value="-2" />-2
+                    <input type="radio" name="X" value="-1" />-1
+                    <input type="radio" name="X" value="0" checked = "checked"/>0
+                    <input type="radio" name="X" value="1" />1
+                    <input type="radio" name="X" value="2" />2
+                    <input type="radio" name="X" value="3" />3
+                    <input type="radio" name="X" value="4" />4
+                    <input type="radio" name="X" value="5" />5<br>
+    </fieldset>
+  <fieldset>
+                <legend>Y axis or Pitch</legend>
+                        <input type="radio" name="Y" value="1" checked = "checked"/>1
+                        <input type="radio" name="Y" value="2" />2
+                        <input type="radio" name="Y" value="3" />3
+                        <input type="radio" name="Y" value="4" />4
+                        <input type="radio" name="Y" value="5" />5
+                        <input type="radio" name="Y" value="6" />6
+                        <input type="radio" name="Y" value="7" />7
+                        <input type="radio" name="Y" value="8" />8
+                        <input type="radio" name="Y" value="9" />9
+                        <input type="radio" name="Y" value="10" />10
+                        <input type="radio" name="Y" value="11" />11<br>
+    </fieldset>
+  <fieldset>
+                <legend>Z axis or Amplitude</legend>
+                        <input type="radio" name="Z" value="1" checked = "checked"/>1
+                        <input type="radio" name="Z" value="2" />2
+                        <input type="radio" name="Z" value="3" />3
+                        <input type="radio" name="Z" value="4" />4
+                        <input type="radio" name="Z" value="5" />5
+                        <input type="radio" name="Z" value="6" />6
+                        <input type="radio" name="Z" value="7" />7
+                        <input type="radio" name="Z" value="8" />8
+                        <input type="radio" name="Z" value="9" />9
+                        <input type="radio" name="Z" value="10" />10
+                        <input type="radio" name="Z" value="11" />11<br>
+    </fieldset>
+  <fieldset>
+                <legend>Generate The Corresponding Tone for selected X,Y,Z</legend>
+                <button onclick="training();">Play</button>
+    </fieldset>
+{% endblock %}
+
+<!--<audio id="player" src="{{ url_for('static', filename='resource/training.wav') }}"></audio>
+  <audio id="player" src="static/resource/training.wav"></audio> this is also working>
     <div>
-    <button onclick="test();">Test</button>
+
     <button onclick="audioControl();">Play</button>
     <button onclick="document.getElementById('player').pause()">Pause</button>
     <button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
     <button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
-    </div>
-{% endblock %}
+    </div>-->

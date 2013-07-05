@@ -18,26 +18,49 @@ function Point(x,y,z){
 };
 
 function generateSineWave(point,sampleRate,amp){
-    var wave = new RIFFWAVE();   //riffwave variable
+
     var data = [];
     var seconds = 1;
-    wave.header.sampleRate = sampleRate;
-    wave.header.numChannels = 2;
-    wave.header.bitsPerSample = 16;
     var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
     var balance = point.x/10;
-    alert(balance);
+    alert("Panning : "+ balance+" Frequency : "+ frequencyHz+" Hz Amplitude : "+ (6*amplitude/2000)+" dB");
     var sample=0;
     //generation of data for tone
-    for (var i = 0; i < wave.header.sampleRate * seconds;) {
-        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / wave.header.sampleRate))*amplitude;
+    for (var i = 0; i < sampleRate * seconds;) {
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate))*amplitude;
         //setting the pan for each channel
         data[i++] = sample * (0.5 - balance);
         data[i++] = sample * (0.5 + balance);
     }
-    alert(data);
+    //alert(data);
+    return data;
+};
+
+function getRadioValue(name){
+    var radios = document.getElementsByName(name);
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            var x=radios[i].value;
+            break;
+        }
+    }
+    //alert(name+x);
+    return x;
+}
+
+function training(){
+    //alert("in test");
+    var point = new Point();
+    point.x=getRadioValue("X");
+    point.y=getRadioValue("Y");
+    point.z=getRadioValue("Z");
+    var data=generateSineWave(point,44100,1000);
+    var wave = new RIFFWAVE();   //riffwave variable
+    wave.header.sampleRate = 44100;
+    wave.header.numChannels = 2;
+    wave.header.bitsPerSample = 16;
     wave.Make(data);
     var audio = new Audio(wave.dataURI);
     if (!audio.paused) { // if playing stop and rewind
@@ -47,22 +70,6 @@ function generateSineWave(point,sampleRate,amp){
     audio.play();
 };
 
-function test(){
-    alert("in test");
-    var point = new Point(-5,1,1);
-    generateSineWave(point,44100,1000);
-};
-
-function Experiment(mode){
-    switch (mode){
-        case "Training":
-            break;
-        case "Testing":
-            break;
-    }
-    var audio = generateSineWave(1000);
-    audio.play();
-};
 
 /*
 function play(audio) {
