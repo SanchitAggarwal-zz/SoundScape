@@ -24,15 +24,15 @@ function generateSineWave(point,sampleRate,amp){
     var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
-    var balance = point.x/10;
+    var balance = point.x;///10;
     alert("Panning : "+ balance+" Frequency : "+ frequencyHz+" Hz Amplitude : "+ (6*amplitude/2000)+" dB");
     var sample=0;
     //generation of data for tone
     for (var i = 0; i < sampleRate * seconds;) {
         sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate))*amplitude;
         //setting the pan for each channel
-        data[i++] = sample * (0.5 - balance);
-        data[i++] = sample * (0.5 + balance);
+        data[i++] = sample * (1-balance)/2;//(0.5 - balance);
+        data[i++] = sample * (1+balance)/2;//(0.5 + balance);
     }
     //alert(data);
     return data;
@@ -68,6 +68,52 @@ function training(){
     audio.currentTime = 0;
   }
     audio.play();
+};
+
+var testpoint=new Point();
+var count=0;
+var correct=0;
+var wrong=0;
+
+function generate(){
+    count++;
+    testpoint.x=-1+Math.round(Math.random()*2);
+    testpoint.y=1+Math.round(Math.random()*10);
+    testpoint.z=1+Math.round(Math.random()*10);
+    var data=generateSineWave(testpoint,44100,1000);
+    var wave = new RIFFWAVE();   //riffwave variable
+    wave.header.sampleRate = 44100;
+    wave.header.numChannels = 2;
+    wave.header.bitsPerSample = 16;
+    wave.Make(data);
+    var audio = new Audio(wave.dataURI);
+    if (!audio.paused) { // if playing stop and rewind
+    audio.pause();
+    audio.currentTime = 0;
+  }
+    audio.play();
+}
+function testing(){
+    //alert("in test");
+    if (count==0){
+        alert("First Play the sound");
+    }
+    else{
+        var point = new Point();
+        point.x=getRadioValue("X");
+        point.y=getRadioValue("Y");
+        point.z=getRadioValue("Z");
+        if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
+            alert("correct");
+            correct++;
+            alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
+        }
+        else {
+            alert("wrong");
+            wrong++;
+            alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
+        }
+    }
 };
 
 

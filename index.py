@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash
-from forms import InformationForm
+from forms import InformationForm,TestForm
 import csv
 import synthesis
 #import xlwt
@@ -57,7 +57,8 @@ def training():
 
 @app.route('/testing')
 def testing():
-  return render_template('testing.html')
+    testform=TestForm()
+    return render_template('testing.html',form=testform)
 
 
 if __name__ == '__main__':

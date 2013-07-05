@@ -10,3 +10,9 @@ class InformationForm(Form):
     gender = SelectField(u'Gender', choices = [('Male','Male'),('Female','Female')])
     blindtype = SelectField(u'Blind Type',choices=[('Congential','Congential'),('Accidental','Accidental'),('Non-Blind','Non-Blind')])
     submit = SubmitField("Send")
+
+class TestForm(Form):
+    attempt=IntegerField("Attempt")
+    wrong=IntegerField("Wrong")
+    correct=IntegerField("Correct")
+    submit=SubmitField("Done")
