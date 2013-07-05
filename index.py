@@ -8,7 +8,7 @@ import synthesis
 app = Flask(__name__)
 app.secret_key = 'experiment@2013'
 CSRF_ENABLED = True
-#Information = False
+Information = False
 
 def save(row):
     csvfile=open("Experiment.xls","a")
@@ -35,8 +35,8 @@ def home():
             row.append(form.email.data)
             row.append(form.contact.data)
             save(row)#.gender.choices[form.gender.data])
-            #Information=True
-            synthesis.Experiment(1,1,1,0,1)
+            Information=True
+            #synthesis.Experiment(1,1,1,0,1)
             return render_template('training.html')
         else:
             print form.errors
@@ -48,14 +48,12 @@ def home():
 @app.route('/training')
 def training():
     #synthesis.Experiment(-5,1,1,0,1)
-    return render_template('training.html')
-    '''if Information:
-        print Information
+    #return render_template('training.html')
+    if Information:
         return render_template('training.html')
     else:
-        print Information
         form=InformationForm()
-        return render_template('home.html',form=form)'''
+        return render_template('home.html',form=form)
 
 @app.route('/testing')
 def testing():
