@@ -39,16 +39,16 @@ function generateSineWave(point,sampleRate,amp){
         //setting the pan for each channel
         switch(balance){
             case -1://left speaker
-                data[j++] = 0;//sample;//(0.5 - balance);
-                data[j++] = sample;//0;//(0.5 + balance);
+                data[j++] = sample;//(0.5 - balance);
+                data[j++] = 0;//(0.5 + balance);
                 break;
             case 0://both
                 data[i] = sample;//(0.5 - balance);
                 //data[j++] = sample;//(0.5 + balance);
                 break;
             case 1://right speaker
-                data[j++] = sample;//0;//(0.5 - balance);
-                data[j++] = 0;//(0.5 + balance);
+                data[j++] = 0;//(0.5 - balance);
+                data[j++] = sample;//0;//(0.5 + balance);
                 break;
 
         }
@@ -116,12 +116,12 @@ function RandomTraining(scenario){
 
     switch(scenario){
         case 1:
-            PntA.y=2+Math.round(Math.random()*9); //range 2-11
-            PntB.y=1+Math.round(Math.random()*(PntA.y-2));//range 1- PntA
+            PntA.y=4+Math.round(Math.random()*7); //range 4-11
+            PntB.y=1+Math.round(Math.random()*(PntA.y-3));//range 1- PntA
             break;
         case 2:
-            PntA.y=1+Math.round(Math.random()*9); //range 1-10
-            PntB.y=1+PntA.y+Math.round(Math.random()*(10-PntA.y)); //range PntA to 11
+            PntA.y=1+Math.round(Math.random()*6); //range 1-7
+            PntB.y=2+PntA.y+Math.round(Math.random()*(9-PntA.y)); //range PntA to 11
             break;
         case 3:
             PntA.z=2+Math.round(Math.random()*9); //range 2-11
