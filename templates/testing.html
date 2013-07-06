@@ -58,17 +58,20 @@
     <table>
         <tr>
             <td><button onclick="testing();">Check</button></td>
-            <td><label for="Actual">Actual Sample (X-Y-Z)</label></td>
+            <!--<td><label for="Actual">Actual Sample (X-Y-Z)</label></td>
             <td><input id="Actual" name="Actual"  type="text" ></td>
             <td><label for="Predicted">Predicted Sample (X-Y-Z)</label></td>
             <td><input id="Predicted" name="Predicted"  type="text"></td>
             <td><label for="Error">Error (X-Y-Z)</label></td>
             <td><input id="Error" name="Error"  type="text"></td>
+            -->
         </tr>
     </table>
 
     <form action="{{ url_for('testing') }}" method=post id="testForm">
-    <table>
+    <fieldset>
+        <legend>Actual and Predicted Sample (X Y Z)</legend>
+        <table>
 
         <!--<tr>
             <td><label for="sample">Samples Played</label></td>
@@ -78,8 +81,28 @@
             <td><label for="wrong">Wrong</label></td>
             <td><input id="wrong" name="wrong" type="text" disabled></td>
          </tr>-->
-
         <tr><td>{{ form.hidden_tag() }}</td></tr>
+
+        <tr>
+                <td>{{ form.actual.label }}</td>
+                <td>{{ form.actual (disabled=true)}}</td>
+                <td>{{ form.predicted.label }}</td>
+                <td>{{ form.predicted (disabled=true)}}</td>
+        </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Error (X Y Z)</legend>
+        <table>
+            <tr>
+
+                <td>{{ form.error.label }}</td>
+                <td>{{ form.error (disabled=true)}}</td>
+
+        </tr>
+        </table>
+    </fieldset>
+    <table>
         <tr>
             <td>{{ form.sample.label }}</td>
             <td>{{ form.sample }}</td>

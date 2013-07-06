@@ -13,6 +13,10 @@
 var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
 var rate=44100; //sample per sec
 var amplitude=1; //amplitude of sine wave
+var testpoint=new Point();
+var sample=0;
+var correct=0;
+var wrong=0;
 //function for 3D point
 function Point(x,y,z){
     this.x=x;
@@ -62,7 +66,7 @@ function generateSineWave(point,sampleRate,amp){
             }
             */
     }
-    alert(data);
+    //alert(data);
     return data;
 };
 
@@ -100,11 +104,59 @@ function training(){
     audio.play();
 };
 
-var testpoint=new Point();
-var sample=0;
-var correct=0;
-var wrong=0;
+function RandomTraining(scenario){
+    var PntA=new Point();
+    PntA.x=-1+Math.round(Math.random()*2); //generating random point
+    PntA.y=1+Math.round(Math.random()*10);
+    PntA.z=1+Math.round(Math.random()*10);
+    var PntB=new Point();
+    PntB.x=PntA.x;
+    PntB.y=PntA.y;
+    PntB.z=PntA.z;
 
+    switch(scenario){
+        case 1:
+            PntA.y=2+Math.round(Math.random()*9); //range 2-11
+            PntB.y=1+Math.round(Math.random()*(PntA.y-2));//range 1- PntA
+            break;
+        case 2:
+            PntA.y=1+Math.round(Math.random()*9); //range 1-10
+            PntB.y=1+PntA.y+Math.round(Math.random()*(10-PntA.y)); //range PntA to 11
+            break;
+        case 4:
+            PntA.z=1+Math.round(Math.random()*9); //range 1-10
+            PntB.z=1+PntA.z+Math.round(Math.random()*(10-PntA.z)); //range PntA to 11
+            break;
+        case 3:
+            PntA.z=2+Math.round(Math.random()*9); //range 2-11
+            PntB.z=1+Math.round(Math.random()*(PntA.z-2));//range 1- PntA
+            break;
+        case 5:
+            PntA.x=-1; //left to
+            PntB.x=1; //right
+            break;
+        case 6:
+            PntA.x=1; //right to
+            PntB.x=-1; //left
+            break;
+    }
+
+    var dataA=generateSineWave(PntA,rate,amplitude);
+    var dataB=generateSineWave(PntB,rate,amplitude);
+    var data= dataA.concat(dataB);
+    var wave = new RIFFWAVE();   //riffwave variable
+    wave.header.sampleRate = rate;
+    wave.header.numChannels = 2;
+    wave.header.bitsPerSample = 16;
+    wave.Make(data);
+    var audio = new Audio(wave.dataURI);
+    if (!audio.paused) { // if playing stop and rewind
+    audio.pause();
+    audio.currentTime = 0;
+  }
+    //audio.volume=0.5+testpoint.z/10;
+    audio.play();
+}
 function generate(){
     sample++;
     testpoint.x=-1+Math.round(Math.random()*2);
@@ -124,6 +176,7 @@ function generate(){
     //audio.volume=0.5+testpoint.z/10;
     audio.play();
 }
+
 function replay(){
     var data=generateSineWave(testpoint,rate,amplitude);
     var wave = new RIFFWAVE();   //riffwave variable
@@ -139,8 +192,9 @@ function replay(){
     //audio.volume=0.5+testpoint.z/10;
     audio.play();
 }
+
 function testing(){
-    alert("in test");
+    //alert("in test");
     if (sample==0){
         alert("First Play the sound");
     }
@@ -149,14 +203,14 @@ function testing(){
         point.x=getRadioValue("X");
         point.y=getRadioValue("Y");
         point.z=getRadioValue("Z");
-        document.getElementsByName("Actual").value=String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
+        //document.getElementsByName("Actual").value=String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
         //String(1);//String("Panning : "+ testpoint.x+" Frequency : "+ testpoint.x+" Hz Amplitude : "+ testpoint.x+" dB");
-        document.getElementsByName("Predicted").value=String(point.x)+" "+String(point.y)+" "+String(point.z);
+        //document.getElementsByName("Predicted").value=String(point.x)+" "+String(point.y)+" "+String(point.z);
         //"2";//String(2);//String("Panning : "+  point.x+" Frequency : "+ point.y+" Hz Amplitude : "+ point.z+" dB");
-        document.getElementsByName("Error").value=String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
-        console.log(document.getElementsByName("Actual").value);
-        console.log(document.getElementsByName("Predicted").value);
-        console.log(document.getElementsByName("Error").value);
+        //document.getElementsByName("Error").value=String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
+        //console.log(document.getElementsByName("Actual").value);
+        //console.log(document.getElementsByName("Predicted").value);
+        //console.log(document.getElementsByName("Error").value);
         if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
             //alert("correct");
             correct++;
@@ -171,6 +225,9 @@ function testing(){
         oFormObject.elements["sample"].value = sample;
         oFormObject.elements["correct"].value = correct;
         oFormObject.elements["wrong"].value = wrong;
+        oFormObject.elements["actual"].value = String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
+        oFormObject.elements["predicted"].value =String(point.x)+" "+String(point.y)+" "+String(point.z);
+        oFormObject.elements["error"].value =String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
         //alert( oFormObject.elements["totalSample"].value );
         /*
         document.getElementsByName("attempt").value=sample;

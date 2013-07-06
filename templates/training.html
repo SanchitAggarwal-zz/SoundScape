@@ -45,6 +45,22 @@
                         <input type="radio" name="Z" value="10" onchange="training();" />10
                         <input type="radio" name="Z" value="11" onchange="training();" />11<br>
     </fieldset>
+    <fieldset>
+                <legend>Two Continuous Tone with difference in Pitch, or Volume, or stereo</legend>
+                        <table>
+                            <tr>
+                                <td><button onclick="RandomTraining(1);">Decreasing Pitch</button></td>
+                                <td><button onclick="RandomTraining(2);">Increasing Pitch</button></td>
+                            </tr>
+                            <tr>
+                                <td><button onclick="RandomTraining(3);">Decreasing Amplitude</button></td>
+                                <td><button onclick="RandomTraining(4);">Increasing Amplitude</button></td>
+                            </tr>
+                                <td><button onclick="RandomTraining(5);">Left to Right Speaker</button></td>
+                                <td><button onclick="RandomTraining(6);">Right to Left Speaker</button></td>
+                            </tr>
+                        </table>
+    </fieldset>
     <form action="{{ url_for('training') }}" method=post>
     <table>
     <tr><td>{{ form.hidden_tag() }}</td></tr>

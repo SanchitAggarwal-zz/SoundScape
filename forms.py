@@ -21,6 +21,9 @@ class TestForm(Form):
     sample = TextField("Sample Played")
     correct = TextField("Correct")
     wrong = TextField("Wrong")
+    predicted=TextField("Predicted")
+    actual=TextField("Actual")
+    error=TextField("Error")
     save = SubmitField("Save")
 
 
