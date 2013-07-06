@@ -1,10 +1,31 @@
 {% extends "layout.html" %}
-
 {% block content %}
   <h2>Testing</h2>
   <p>Play the Sound and then Select the X, Y and Z axis</p>
    <fieldset>
-                <legend>Generate The Sample and select corresponding X,Y,Z</legend>
+            <legend>Two Continuous Tone with difference in Pitch, or Volume, or stereo</legend>
+            <table>
+                 <tr>
+                     <td><button onclick="ScenarioTesting(1);">Play</button></td>
+                     <td><button onclick="ScenarioTesting(2);">Replay</button></td>
+                 </tr>
+                 <tr>
+                     <td><input type="radio" name="scenarioTest" value="1" onchange="ScenarioTesting(3);"/>Decreasing Pitch</td>
+                     <td><input type="radio" name="scenarioTest" value="2" onchange="ScenarioTesting(3);"/>Increase Pitch</td>
+                 </tr>
+                 <tr>
+                     <td><input type="radio" name="scenarioTest" value="3" onchange="ScenarioTesting(3);"/>Decrease Volume</td>
+                     <td><input type="radio" name="scenarioTest" value="4" onchange="ScenarioTesting(3);"/>Increase Volume</td>
+                 </tr>
+                 <tr>
+                     <td><input type="radio" name="scenarioTest" value="5" onchange="ScenarioTesting(3);"/>Left to Right Speaker</td>
+                     <td><input type="radio" name="scenarioTest" value="6" onchange="ScenarioTesting(3);"/>Right to Left Speaker</td>
+                 </tr>
+            </table>
+
+   </fieldset>
+   <fieldset>
+                <legend>Generate The Sample and select corresponding X,Y,Z and Click Check Button for Result</legend>
                 <table>
                 <tr>
                     <td><button onclick="generate();">Play</button></td>
@@ -67,7 +88,6 @@
             -->
         </tr>
     </table>
-
     <form action="{{ url_for('testing') }}" method=post id="testForm">
     <fieldset>
         <legend>Actual and Predicted Sample (X Y Z)</legend>
