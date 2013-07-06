@@ -10,31 +10,59 @@
     Furthermore Color is also represented using different frequency for each sound.
 */
 
+var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
+var rate=44100; //sample per sec
+var amplitude=1; //amplitude of sine wave
 //function for 3D point
 function Point(x,y,z){
     this.x=x;
     this.y=y;
     this.z=z;
 };
-var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
-function generateSineWave(point,sampleRate,amp){
 
+function generateSineWave(point,sampleRate,amp){
     var data = [];
     var seconds = 1;
-
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
-    var balance = point.x;///10;
+    var balance = parseInt(point.x);///10;
     //alert("Panning : "+ balance+" Frequency : "+ frequencyHz+" Hz Amplitude : "+ (6*amplitude/2000)+" dB");
     var sample=0;
     //generation of data for tone
-    for (var i = 0; i < sampleRate * seconds;) {
-        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate)*amp);
+    var j=0;
+    for (var i = 0; i < sampleRate * seconds;i++) {
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate)*amplitude);
         //setting the pan for each channel
-        data[i++] = sample * (1-balance)/2;//(0.5 - balance);
-        data[i++] = sample * (1+balance)/2;//(0.5 + balance);
+        switch(balance){
+            case -1://left speaker
+                data[j++] = 0;//sample;//(0.5 - balance);
+                data[j++] = sample;//0;//(0.5 + balance);
+                break;
+            case 0://both
+                data[i] = sample;//(0.5 - balance);
+                //data[j++] = sample;//(0.5 + balance);
+                break;
+            case 1://right speaker
+                data[j++] = sample;//0;//(0.5 - balance);
+                data[j++] = 0;//(0.5 + balance);
+                break;
+
+        }
+        /*if(balance==-1){//left speaker
+                data[j++] = sample;//(0.5 - balance);
+                data[j++] = 0;//(0.5 + balance);
+            }
+            else if(balance==0){
+                data[i++] = sample;//(0.5 - balance);
+                data[i] = sample;//(0.5 + balance);
+            }
+            else if(balance==0){
+                data[i++] = sample;//(0.5 - balance);
+                data[i] = sample;//(0.5 + balance);
+            }
+            */
     }
-    //alert(data);
+    alert(data);
     return data;
 };
 
@@ -56,9 +84,9 @@ function training(){
     point.x=getRadioValue("X");
     point.y=getRadioValue("Y");
     point.z=getRadioValue("Z");
-    var data=generateSineWave(point,44100,1000);
+    var data=generateSineWave(point,rate,amplitude);
     var wave = new RIFFWAVE();   //riffwave variable
-    wave.header.sampleRate = 44100;
+    wave.header.sampleRate = rate;
     wave.header.numChannels = 2;
     wave.header.bitsPerSample = 16;
     wave.Make(data);
@@ -68,7 +96,7 @@ function training(){
     audio.currentTime = 0;
     //audio.volume=5;
   }
-    //audio.volume=audio.volume+3*point.z;
+    //audio.volume=0.5+point.z/10;
     audio.play();
 };
 
@@ -82,9 +110,9 @@ function generate(){
     testpoint.x=-1+Math.round(Math.random()*2);
     testpoint.y=1+Math.round(Math.random()*10);
     testpoint.z=1+Math.round(Math.random()*10);
-    var data=generateSineWave(testpoint,44100,1000);
+    var data=generateSineWave(testpoint,rate,amplitude);
     var wave = new RIFFWAVE();   //riffwave variable
-    wave.header.sampleRate = 44100;
+    wave.header.sampleRate = rate;
     wave.header.numChannels = 2;
     wave.header.bitsPerSample = 16;
     wave.Make(data);
@@ -93,12 +121,13 @@ function generate(){
     audio.pause();
     audio.currentTime = 0;
   }
+    //audio.volume=0.5+testpoint.z/10;
     audio.play();
 }
 function replay(){
-    var data=generateSineWave(testpoint,44100,1000);
+    var data=generateSineWave(testpoint,rate,amplitude);
     var wave = new RIFFWAVE();   //riffwave variable
-    wave.header.sampleRate = 44100;
+    wave.header.sampleRate = rate;
     wave.header.numChannels = 2;
     wave.header.bitsPerSample = 16;
     wave.Make(data);
@@ -107,6 +136,7 @@ function replay(){
     audio.pause();
     audio.currentTime = 0;
   }
+    //audio.volume=0.5+testpoint.z/10;
     audio.play();
 }
 function testing(){
@@ -119,8 +149,14 @@ function testing(){
         point.x=getRadioValue("X");
         point.y=getRadioValue("Y");
         point.z=getRadioValue("Z");
-        document.getElementsByName("Actual").value=sample;//String(1);//String("Panning : "+ testpoint.x+" Frequency : "+ testpoint.x+" Hz Amplitude : "+ testpoint.x+" dB");
-        document.getElementsByName("Predicted").value=sample;//"2";//String(2);//String("Panning : "+  point.x+" Frequency : "+ point.y+" Hz Amplitude : "+ point.z+" dB");
+        document.getElementsByName("Actual").value=String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
+        //String(1);//String("Panning : "+ testpoint.x+" Frequency : "+ testpoint.x+" Hz Amplitude : "+ testpoint.x+" dB");
+        document.getElementsByName("Predicted").value=String(point.x)+" "+String(point.y)+" "+String(point.z);
+        //"2";//String(2);//String("Panning : "+  point.x+" Frequency : "+ point.y+" Hz Amplitude : "+ point.z+" dB");
+        document.getElementsByName("Error").value=String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
+        console.log(document.getElementsByName("Actual").value);
+        console.log(document.getElementsByName("Predicted").value);
+        console.log(document.getElementsByName("Error").value);
         if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
             //alert("correct");
             correct++;
