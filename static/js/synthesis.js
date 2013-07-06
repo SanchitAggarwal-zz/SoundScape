@@ -168,7 +168,6 @@ function RandomTraining(scenario){
 }
 
 function generate(){
-    sample++;
     scenario=-1;
     testpoint.x=-1+Math.round(Math.random()*2);
     testpoint.y=1+Math.round(Math.random()*10);
@@ -186,10 +185,15 @@ function generate(){
   }
     //audio.volume=0.5+testpoint.z/10;
     audio.play();
+    oFormObject = document.forms['testForm'];
+    oFormObject.elements["actual"].value = String("");
+    oFormObject.elements["predicted"].value =String("");
+    oFormObject.elements["error"].value =String("");
+
 }
 
 function replay(){
-    if(scenario==-1){
+    if(scenario==0){
       alert("No sound to replay");
     }
     else{
@@ -216,27 +220,16 @@ function testing(){
         alert("First Play the sound");
     }
     else{
+        sample++;
         var point = new Point();
         point.x=getRadioValue("X");
         point.y=getRadioValue("Y");
         point.z=getRadioValue("Z");
-        //document.getElementsByName("Actual").value=String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
-        //String(1);//String("Panning : "+ testpoint.x+" Frequency : "+ testpoint.x+" Hz Amplitude : "+ testpoint.x+" dB");
-        //document.getElementsByName("Predicted").value=String(point.x)+" "+String(point.y)+" "+String(point.z);
-        //"2";//String(2);//String("Panning : "+  point.x+" Frequency : "+ point.y+" Hz Amplitude : "+ point.z+" dB");
-        //document.getElementsByName("Error").value=String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
-        //console.log(document.getElementsByName("Actual").value);
-        //console.log(document.getElementsByName("Predicted").value);
-        //console.log(document.getElementsByName("Error").value);
         if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
-            //alert("correct");
             correct++;
-            //alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
         else {
-            //alert("wrong");
             wrong++;
-            //alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
         oFormObject = document.forms['testForm'];
         oFormObject.elements["sample"].value = sample;
@@ -245,17 +238,6 @@ function testing(){
         oFormObject.elements["actual"].value = String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
         oFormObject.elements["predicted"].value =String(point.x)+" "+String(point.y)+" "+String(point.z);
         oFormObject.elements["error"].value =String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
-        scenario=0;
-        //alert( oFormObject.elements["totalSample"].value );
-        /*
-        document.getElementsByName("attempt").value=sample;
-        document.getElementsByName("correct").value=correct;
-        document.getElementsByName("wrong").value=wrong;
-        */
-        //alert("attempt: "+count+"correct: "+correct+"wrong: "+wrong);
-        /*document.getElementsByName("attempt").value=count;
-        document.getElementsByName("correct").value=correct;
-        document.getElementsByName("wrong").value=wrong;*/
     }
 };
 
@@ -266,7 +248,7 @@ function ScenarioTesting(playtype){
         RandomTraining(scenario);
     }
     else if(parseInt(playtype)==2){
-        if(scenario==0){
+        if(scenario==0||scenario==-1){
             alert("First play the scenario");
         }
         else{

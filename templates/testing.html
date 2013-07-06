@@ -90,7 +90,7 @@
     </table>
     <form action="{{ url_for('testing') }}" method=post id="testForm">
     <fieldset>
-        <legend>Actual and Predicted Sample (X Y Z)</legend>
+        <legend>Actual and Predicted Sample (X Y Z) and Error (X Y Z)</legend>
         <table>
 
         <!--<tr>
@@ -108,10 +108,12 @@
                 <td>{{ form.actual (disabled=true)}}</td>
                 <td>{{ form.predicted.label }}</td>
                 <td>{{ form.predicted (disabled=true)}}</td>
+                <td>{{ form.error.label }}</td>
+                <td>{{ form.error (disabled=true)}}</td>
         </tr>
         </table>
     </fieldset>
-    <fieldset>
+<!--    <fieldset>
         <legend>Error (X Y Z)</legend>
         <table>
             <tr>
@@ -121,7 +123,7 @@
 
         </tr>
         </table>
-    </fieldset>
+    </fieldset>-->
     <table>
         <tr>
             <td>{{ form.sample.label }}</td>
