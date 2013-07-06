@@ -123,13 +123,13 @@ function RandomTraining(scenario){
             PntA.y=1+Math.round(Math.random()*9); //range 1-10
             PntB.y=1+PntA.y+Math.round(Math.random()*(10-PntA.y)); //range PntA to 11
             break;
-        case 4:
-            PntA.z=1+Math.round(Math.random()*9); //range 1-10
-            PntB.z=1+PntA.z+Math.round(Math.random()*(10-PntA.z)); //range PntA to 11
-            break;
         case 3:
             PntA.z=2+Math.round(Math.random()*9); //range 2-11
             PntB.z=1+Math.round(Math.random()*(PntA.z-2));//range 1- PntA
+            break;
+        case 4:
+            PntA.z=1+Math.round(Math.random()*9); //range 1-10
+            PntB.z=1+PntA.z+Math.round(Math.random()*(10-PntA.z)); //range PntA to 11
             break;
         case 5:
             PntA.x=-1; //left to
