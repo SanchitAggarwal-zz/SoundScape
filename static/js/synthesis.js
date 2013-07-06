@@ -17,6 +17,9 @@ var testpoint=new Point();
 var sample=0;
 var correct=0;
 var wrong=0;
+function updateAmplitude(a){
+    amplitude=parseInt(a);
+}
 //function for 3D point
 function Point(x,y,z){
     this.x=x;

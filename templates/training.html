@@ -4,6 +4,11 @@
   <h2>Training</h2>
   <p>Change the X, Y and Z axis to hear corresponding Tone</p>
   <fieldset>
+            <legend>Set initial Volume(1-10)</legend>
+            <label for="volume">Volume (1-10)</label>
+            <input name="volume" min="1" max="10" type="range" step="1" value="5" onchange="updateAmplitude(this.value);"/>
+  </fieldset>
+  <fieldset>
             <legend>X axis or Stereo Panning (-1-Left , 0-Both, 1-Right)</legend>
                     <!--<input type="radio" name="X" value="-5" />-5
                     <input type="radio" name="X" value="-4" />-4
