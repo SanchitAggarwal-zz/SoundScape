@@ -29,7 +29,7 @@ function generateSineWave(point,sampleRate,amp){
     var sample=0;
     //generation of data for tone
     for (var i = 0; i < sampleRate * seconds;) {
-        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate));
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate)*amp);
         //setting the pan for each channel
         data[i++] = sample * (1-balance)/2;//(0.5 - balance);
         data[i++] = sample * (1+balance)/2;//(0.5 + balance);

@@ -69,10 +69,10 @@ def testing():
     if Information:
         if request.method == 'POST':
             print "saving"
-            played = request.form['totalSample']
-            print played
-            correct = request.form['correct']
-            wrong = request.form['wrong']
+            played = request.form.get('totalSample')
+            correct = request.form.get('correct')
+            wrong = request.form.get('wrong')#request.form['wrong']
+            print played,wrong,correct
             row.append(played)
             row.append(correct)
             row.append(wrong)
