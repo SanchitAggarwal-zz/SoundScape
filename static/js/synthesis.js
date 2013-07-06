@@ -16,12 +16,12 @@ function Point(x,y,z){
     this.y=y;
     this.z=z;
 };
-
+var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
 function generateSineWave(point,sampleRate,amp){
 
     var data = [];
     var seconds = 1;
-    var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
+
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
     var balance = point.x;///10;
@@ -29,7 +29,7 @@ function generateSineWave(point,sampleRate,amp){
     var sample=0;
     //generation of data for tone
     for (var i = 0; i < sampleRate * seconds;) {
-        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate))*amplitude;
+        sample = Math.round(128 + 127 * Math.sin(i * 2 * Math.PI * frequencyHz / sampleRate));
         //setting the pan for each channel
         data[i++] = sample * (1-balance)/2;//(0.5 - balance);
         data[i++] = sample * (1+balance)/2;//(0.5 + balance);
@@ -66,7 +66,9 @@ function training(){
     if (!audio.paused) { // if playing stop and rewind
     audio.pause();
     audio.currentTime = 0;
+    //audio.volume=5;
   }
+    //audio.volume=audio.volume+3*point.z;
     audio.play();
 };
 
@@ -140,10 +142,24 @@ function testing(){
         document.getElementsByName("wrong").value=wrong;
         */
         //alert("attempt: "+count+"correct: "+correct+"wrong: "+wrong);
+        /*document.getElementsByName("attempt").value=count;
+        document.getElementsByName("correct").value=correct;
+        document.getElementsByName("wrong").value=wrong;*/
     }
 };
 
-
+/*$(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON($SCRIPT_ROOT + '/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+*/
 /*
 function play(audio) {
   if (!audio.paused) { // if playing stop and rewind
