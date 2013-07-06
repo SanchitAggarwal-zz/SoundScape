@@ -25,7 +25,7 @@ function generateSineWave(point,sampleRate,amp){
     var frequencyHz = pitch[point.y];
     var amplitude = amp*point.z;
     var balance = point.x;///10;
-    alert("Panning : "+ balance+" Frequency : "+ frequencyHz+" Hz Amplitude : "+ (6*amplitude/2000)+" dB");
+    //alert("Panning : "+ balance+" Frequency : "+ frequencyHz+" Hz Amplitude : "+ (6*amplitude/2000)+" dB");
     var sample=0;
     //generation of data for tone
     for (var i = 0; i < sampleRate * seconds;) {
@@ -71,12 +71,12 @@ function training(){
 };
 
 var testpoint=new Point();
-var count=0;
+var sample=0;
 var correct=0;
 var wrong=0;
 
 function generate(){
-    count++;
+    sample++;
     testpoint.x=-1+Math.round(Math.random()*2);
     testpoint.y=1+Math.round(Math.random()*10);
     testpoint.z=1+Math.round(Math.random()*10);
@@ -93,9 +93,23 @@ function generate(){
   }
     audio.play();
 }
+function replay(){
+    var data=generateSineWave(testpoint,44100,1000);
+    var wave = new RIFFWAVE();   //riffwave variable
+    wave.header.sampleRate = 44100;
+    wave.header.numChannels = 2;
+    wave.header.bitsPerSample = 16;
+    wave.Make(data);
+    var audio = new Audio(wave.dataURI);
+    if (!audio.paused) { // if playing stop and rewind
+    audio.pause();
+    audio.currentTime = 0;
+  }
+    audio.play();
+}
 function testing(){
-    //alert("in test");
-    if (count==0){
+    alert("in test");
+    if (sample==0){
         alert("First Play the sound");
     }
     else{
@@ -103,26 +117,29 @@ function testing(){
         point.x=getRadioValue("X");
         point.y=getRadioValue("Y");
         point.z=getRadioValue("Z");
+        document.getElementsByName("Actual").value=sample;//String(1);//String("Panning : "+ testpoint.x+" Frequency : "+ testpoint.x+" Hz Amplitude : "+ testpoint.x+" dB");
+        document.getElementsByName("Predicted").value=sample;//"2";//String(2);//String("Panning : "+  point.x+" Frequency : "+ point.y+" Hz Amplitude : "+ point.z+" dB");
         if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
-            alert("correct");
+            //alert("correct");
             correct++;
-            alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
+            //alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
         else {
-            alert("wrong");
+            //alert("wrong");
             wrong++;
-            alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
+            //alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
-        var attempt=document.getElementsByName("attempt");
-        attempt.val=count;
-        attempt.disabled=true;
-        var correctInput=document.getElementsByName("correct");
-        correctInput.val=correct;
-        correctInput.disabled=true;
-        var wrongInput=document.getElementsByName("wrong");
-        wrongInput.val=wrong;
-        wrongInput.disabled=true;
-
+        oFormObject = document.forms['testForm'];
+        oFormObject.elements["totalSample"].value = sample;
+        oFormObject.elements["correct"].value = correct;
+        oFormObject.elements["wrong"].value = wrong;
+        //alert( oFormObject.elements["totalSample"].value );
+        /*
+        document.getElementsByName("attempt").value=sample;
+        document.getElementsByName("correct").value=correct;
+        document.getElementsByName("wrong").value=wrong;
+        */
+        //alert("attempt: "+count+"correct: "+correct+"wrong: "+wrong);
     }
 };
 
@@ -143,8 +160,15 @@ function play(audio) {
 
 		//Base Frequency based on the notes
 		baseFreq = function(index) {
-			var r = 2 * Math.PI * 440.0 * Math.pow(2,(notes[index]-69)/12.0) / sampleRateHz;
+			var r = 2 * Math.PI * 523.0 * Math.pow(2,(notes[index]-69)/12.0) / sampleRateHz;
 			return r;
 		};
+
+//Fill up the sound data!!
+for(var j = 0; j < 2*sampleRateHz; j++) {
+	var l = 2*sampleRateHz / notes.length;
+	data[j] = 64 + 32 * Math.round(Math.sin(baseFreq(Math.round(j/l)) * j));
+}
+
 
 */

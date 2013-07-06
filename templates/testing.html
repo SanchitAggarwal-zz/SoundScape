@@ -4,11 +4,16 @@
   <h2>Testing</h2>
   <p>Play the Sound and then Select the X, Y and Z axis</p>
    <fieldset>
-                <legend>Generate The Tone and select corresponding X,Y,Z</legend>
-                <button onclick="generate();">Play</button>
+                <legend>Generate The Sample and select corresponding X,Y,Z</legend>
+                <table>
+                <tr>
+                    <td><button onclick="generate();">Play</button></td>
+                    <td> <button onclick="replay();">Replay</button></td>
+                </tr>
+                </table>
    </fieldset>
   <fieldset>
-            <legend>X axis or Pan </legend>
+            <legend>X axis or Pan -1 Left 0 Both 1 Right</legend>
                     <!--<input type="radio" name="X" value="-5" />-5
                     <input type="radio" name="X" value="-4" />-4
                     <input type="radio" name="X" value="-3" />-3
@@ -22,7 +27,7 @@
                     <input type="radio" name="X" value="5" />5--><br>
    </fieldset>
   <fieldset>
-                <legend>Y axis or Pitch</legend>
+                <legend>Y axis or Pitch 1-Lowest 11-Highest</legend>
                         <input type="radio" name="Y" value="1" checked = "checked"/>1
                         <input type="radio" name="Y" value="2" />2
                         <input type="radio" name="Y" value="3" />3
@@ -36,7 +41,7 @@
                         <input type="radio" name="Y" value="11" />11<br>
     </fieldset>
   <fieldset>
-                <legend>Z axis or Amplitude</legend>
+                <legend>Z axis or Amplitude 1-Lowest 11-Highest</legend>
                         <input type="radio" name="Z" value="1" checked = "checked"/>1
                         <input type="radio" name="Z" value="2" />2
                         <input type="radio" name="Z" value="3" />3
@@ -51,24 +56,28 @@
     </fieldset>
     <fieldset>
                 <legend>Click Check</legend>
-                <button onclick="testing();">Check</button>
+                <table>
+                    <tr>
+                        <td><button onclick="testing();">Check</button></td>
+                        <td><label for="Actual">Actual Sample</label></td>
+                        <td><input id="Actual" name="Actual"  type="text" disabled></td>
+                        <td><label for="Predicted">Predicted Sample</label></td>
+                        <td><input id="Predicted" name="Predicted"  type="text" disabled></td>
+                    </tr>
+                </table>
    </fieldset>
-    <form action="{{ url_for('testing') }}" method=post>
+    <form action="{{ url_for('testing') }}" method=post id="testForm">
     <table>
-    <tr><td>{{ form.hidden_tag() }}</td></tr>
     <tr>
-        <td>{{ form.correct.label }}</td>
-        <td>{{ form.correct }}</td>
+        <td><label for="totalSample">Samples Played</label></td>
+        <td><input id="totalSample" name="totalSample"  type="text" disabled></td>
+        <td><label for="correct">Correct</label></td>
+        <td><input id="correct" name="correct" type="text" disabled></td>
+        <td><label for="wrong">Wrong</label></td>
+        <td><input id="wrong" name="wrong" type="text" disabled></td>
+        <tr><td>{{ form.hidden_tag() }}</td></tr>
+        <tr><td>{{ form.done }}</td></tr>
     </tr>
-    <tr>
-        <td>{{ form.wrong.label }}</td>
-        <td>{{ form.wrong }}</td>
-    </tr>
-    <tr>
-        <td>{{ form.attempt.label }}</td>
-        <td>{{ form.attempt }}</td>
-    </tr>
-    <tr><td>{{ form.done }}</td></tr>
     </table>
   </form>
 {% endblock %}

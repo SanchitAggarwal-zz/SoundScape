@@ -69,10 +69,15 @@ def testing():
     if Information:
         if request.method == 'POST':
             print "saving"
-            row.append(testform.correct.data)
-            row.append(testform.wrong.data)
-            row.append(testform.attempt.data)
+            played = request.form['totalSample']
+            print played
+            correct = request.form['correct']
+            wrong = request.form['wrong']
+            row.append(played)
+            row.append(correct)
+            row.append(wrong)
             save(row)
+            print "finish saving"
             del row[:]
             Information=False
             form=InformationForm()
@@ -85,3 +90,4 @@ def testing():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    #app.run(host="0.0.0.0")
