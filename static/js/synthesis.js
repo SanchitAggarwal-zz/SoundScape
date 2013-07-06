@@ -132,7 +132,7 @@ function testing(){
             //alert("Generated Point:"+testpoint.x+" " +testpoint.y +" "+testpoint.z + " Selected Point: "+ point.x+" " +  point.y+" "+point.z);
         }
         oFormObject = document.forms['testForm'];
-        oFormObject.elements["totalSample"].value = sample;
+        oFormObject.elements["sample"].value = sample;
         oFormObject.elements["correct"].value = correct;
         oFormObject.elements["wrong"].value = wrong;
         //alert( oFormObject.elements["totalSample"].value );

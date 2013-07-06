@@ -5,7 +5,7 @@ import synthesis
 #import xlwt
 
 app = Flask(__name__)
-app.secret_key = 'experiment@2013'
+app.secret_key = 'experiment@20137'
 CSRF_ENABLED = True
 Information = False
 row=[]
@@ -69,9 +69,13 @@ def testing():
     if Information:
         if request.method == 'POST':
             print "saving"
-            played = request.form.get('totalSample')
+            '''played = request.form.get('sample')
             correct = request.form.get('correct')
             wrong = request.form.get('wrong')#request.form['wrong']
+            '''
+            played = request.form['sample']
+            correct = request.form['correct']
+            wrong = request.form['wrong']
             print played,wrong,correct
             row.append(played)
             row.append(correct)

@@ -45,10 +45,6 @@
                         <input type="radio" name="Z" value="10" onchange="training();" />10
                         <input type="radio" name="Z" value="11" onchange="training();" />11<br>
     </fieldset>
-  <!--<fieldset>
-                <legend>Generate The Corresponding Tone for selected X,Y,Z</legend>
-                <button onclick="training();">Play</button>
-    </fieldset>-->
     <form action="{{ url_for('training') }}" method=post>
     <table>
     <tr><td>{{ form.hidden_tag() }}</td></tr>
@@ -66,3 +62,7 @@
     <button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
     <button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
     </div>-->
+  <!--<fieldset>
+                <legend>Generate The Corresponding Tone for selected X,Y,Z</legend>
+                <button onclick="training();">Play</button>
+    </fieldset>-->

@@ -70,16 +70,27 @@
    </fieldset>
     <form action="{{ url_for('testing') }}" method=post id="testForm">
     <table>
-    <tr>
-        <td><label for="totalSample">Samples Played</label></td>
-        <td><input id="totalSample" name="totalSample"  type="text" disabled></td>
-        <td><label for="correct">Correct</label></td>
-        <td><input id="correct" name="correct" type="text" disabled></td>
-        <td><label for="wrong">Wrong</label></td>
-        <td><input id="wrong" name="wrong" type="text" disabled></td>
+
+        <!--<tr>
+            <td><label for="sample">Samples Played</label></td>
+            <td><input id="sample" name="sample"  type="text" disabled></td>
+            <td><label for="correct">Correct</label></td>
+            <td><input id="correct" name="correct" type="text" disabled></td>
+            <td><label for="wrong">Wrong</label></td>
+            <td><input id="wrong" name="wrong" type="text" disabled></td>
+         </tr>-->
+
         <tr><td>{{ form.hidden_tag() }}</td></tr>
-        <tr><td>{{ form.done }}</td></tr>
-    </tr>
+        <tr>
+            <td>{{ form.sample.label }}</td>
+            <td>{{ form.sample }}</td>
+            <td>{{ form.correct.label }}</td>
+            <td>{{ form.correct }}</td>
+            <td>{{ form.wrong.label }}</td>
+            <td>{{ form.wrong }}</td>
+        </tr>
+        <tr><td>{{ form.save }}</td></tr>
+
     </table>
   </form>
 {% endblock %}
