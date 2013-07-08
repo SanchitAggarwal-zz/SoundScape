@@ -20,7 +20,8 @@ var sample=0;
 var correct=0;
 var wrong=0;
 var scenario=0;
-
+var check=0;
+var temp=-1;
 function updateAmplitude(a){
     amplitude=parseInt(a);
 }
@@ -168,7 +169,7 @@ function RandomTraining(scenario){
 }
 
 function generate(){
-    scenario=-1;
+    check=1;
     testpoint.x=-1+Math.round(Math.random()*2);
     testpoint.y=1+Math.round(Math.random()*10);
     testpoint.z=1+Math.round(Math.random()*10);
@@ -185,16 +186,16 @@ function generate(){
   }
     //audio.volume=0.5+testpoint.z/10;
     audio.play();
-    oFormObject = document.forms['testForm'];
+/*    oFormObject = document.forms['testForm'];
     oFormObject.elements["actual"].value = String("");
     oFormObject.elements["predicted"].value =String("");
     oFormObject.elements["error"].value =String("");
-
+*/
 }
 
 function replay(){
-    if(scenario==0){
-      alert("No sound to replay");
+    if(check==0){
+      alert("First Generate the sound for Replay");
     }
     else{
         var data=generateSineWave(testpoint,rate,amplitude);
@@ -216,39 +217,45 @@ function replay(){
 
 function testing(){
     //alert("in test");
-    if (scenario==0){
-        alert("First Play the sound");
+    if (check==0){
+        alert("First Generate the sound for X:Y:Z prediction");
     }
     else{
-        sample++;
+        //sample++;
         var point = new Point();
         point.x=getRadioValue("X");
         point.y=getRadioValue("Y");
         point.z=getRadioValue("Z");
-        if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
+        /*if(point.x==testpoint.x && point.y==testpoint.y && point.z==testpoint.z){
             correct++;
         }
         else {
             wrong++;
         }
-        oFormObject = document.forms['testForm'];
+
         oFormObject.elements["sample"].value = sample;
         oFormObject.elements["correct"].value = correct;
         oFormObject.elements["wrong"].value = wrong;
-        oFormObject.elements["actual"].value = String(testpoint.x)+" "+String(testpoint.y)+" "+String(testpoint.z);
-        oFormObject.elements["predicted"].value =String(point.x)+" "+String(point.y)+" "+String(point.z);
-        oFormObject.elements["error"].value =String(testpoint.x-point.x)+" "+String(testpoint.y-point.y)+" "+String(testpoint.z-point.z);
+        */
+        oFormObject = document.forms['testForm_check'];
+        oFormObject.elements["actual"].value = String(testpoint.x)+":"+String(testpoint.y)+":"+String(testpoint.z);
+        oFormObject.elements["predicted"].value =String(point.x)+":"+String(point.y)+":"+String(point.z);
+        oFormObject.elements["error"].value =String(testpoint.x-point.x)+":"+String(testpoint.y-point.y)+":"+String(testpoint.z-point.z);
+        check=0;
     }
 };
 
 function ScenarioTesting(playtype){
     if (parseInt(playtype)==1){
         sample++;
-        scenario=parseInt(1+Math.round(Math.random()*5));
+        do{
+            temp = parseInt(1+Math.round(Math.random()*5));
+        }while(temp==scenario)
+        scenario=temp;
         RandomTraining(scenario);
     }
     else if(parseInt(playtype)==2){
-        if(scenario==0||scenario==-1){
+        if(scenario==0){
             alert("First play the scenario");
         }
         else{
@@ -263,7 +270,7 @@ function ScenarioTesting(playtype){
         else{
             wrong++;
         }
-        oFormObject = document.forms['testForm'];
+        oFormObject = document.forms['testForm_save'];
         oFormObject.elements["sample"].value = sample;
         oFormObject.elements["correct"].value = correct;
         oFormObject.elements["wrong"].value = wrong;

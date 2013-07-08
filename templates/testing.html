@@ -7,7 +7,7 @@
             <input name="volume" min="1" max="10" type="range" step="1" value="5" onchange="updateAmplitude(this.value);"/>
   </fieldset>
    <fieldset>
-            <legend>Click on Play and then Select the Scenario</legend>
+            <legend>Click on Play and then Select the Scenario and click "save" button to save result</legend>
             <table>
                  <tr>
                      <td><button onclick="ScenarioTesting(1);">Play</button></td>
@@ -26,6 +26,25 @@
             </table>
 
    </fieldset>
+  <form action="{{ url_for('testing') }}" method=post id="testForm_save">
+     <fieldset>
+        <legend>Total Scenario Played and Correct/Wrong Response</legend>
+        <table>
+        <tr><td>{{ form.hidden_tag() }}</td></tr>
+        <tr>
+            <td>{{ form.sample.label }}</td>
+            <td>{{ form.sample }}</td>
+            <td>{{ form.correct.label }}</td>
+            <td>{{ form.correct }}</td>
+            <td>{{ form.wrong.label }}</td>
+            <td>{{ form.wrong }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.save }}</td>
+        </tr>
+        </table>
+    </fieldset>
+  </form>
   <fieldset>
                 <legend>Generate The Sample and select corresponding X,Y,Z and Click Check to Predict the Result</legend>
                 <table>
@@ -42,7 +61,7 @@
                     <input type="radio" name="X" value="-4" />-4
                     <input type="radio" name="X" value="-3" />-3
                     <input type="radio" name="X" value="-2" />-2-->
-                    <input type="radio" name="X" value="-1" />-1
+                    <input type="radio" name="X" value="-1" checked = "checked" />-1
                     <input type="radio" name="X" value="0"  />0
                     <input type="radio" name="X" value="1" />1
                     <!--<input type="radio" name="X" value="2" />2
@@ -52,7 +71,7 @@
    </fieldset>
   <fieldset>
                 <legend>Y axis or Pitch (1-Lowest, 11-Highest)</legend>
-                        <input type="radio" name="Y" value="1" />1
+                        <input type="radio" name="Y" value="1" checked = "checked" />1
                         <input type="radio" name="Y" value="2" />2
                         <input type="radio" name="Y" value="3" />3
                         <input type="radio" name="Y" value="4" />4
@@ -66,7 +85,7 @@
     </fieldset>
   <fieldset>
                 <legend>Z axis or Volume (1-Lowest, 11-Highest)</legend>
-                        <input type="radio" name="Z" value="1" />1
+                        <input type="radio" name="Z" value="1" checked = "checked" />1
                         <input type="radio" name="Z" value="2" />2
                         <input type="radio" name="Z" value="3" />3
                         <input type="radio" name="Z" value="4" />4
@@ -78,10 +97,10 @@
                         <input type="radio" name="Z" value="10" />10
                         <input type="radio" name="Z" value="11" />11<br>
     </fieldset>
-    <form action="{{ url_for('testing') }}" method=post id="testForm">
+  <form action="{{ url_for('testing') }}" method=post id="testForm_check">
 
     <fieldset>
-        <legend>Actual, Predicted Sample and Error (X Y Z)</legend>
+        <legend>Actual, Predicted Sample and Error (X:Y:Z)</legend>
         <table>
         <tr><td>{{ form.hidden_tag() }}</td></tr>
 
@@ -94,16 +113,7 @@
                 <td>{{ form.error }}</td>
         </tr>
         <tr>
-            <td>{{ form.sample.label }}</td>
-            <td>{{ form.sample }}</td>
-            <td>{{ form.correct.label }}</td>
-            <td>{{ form.correct }}</td>
-            <td>{{ form.wrong.label }}</td>
-            <td>{{ form.wrong }}</td>
-        </tr>
-        <tr>
             <td>{{ form.check (onclick="testing();") }}</td>
-            <td>{{ form.save }}</td>
         </tr>
         </table>
     </fieldset>

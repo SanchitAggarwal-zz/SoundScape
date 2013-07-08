@@ -24,6 +24,8 @@ def save(row):
 
 @app.route('/',methods=['GET','POST'])
 def home():
+    global Information
+    Information=False
     form=InformationForm()
     if request.method == 'POST':
         if form.validate():
@@ -38,7 +40,6 @@ def home():
             save(row)
             del row[:]
             #.gender.choices[form.gender.data])
-            global Information
             Information= True
             trainingform=TrainingForm()
             #synthesis.Experiment(1,1,1,0,1)
@@ -96,18 +97,16 @@ def testing():
                 correct = request.form['correct']
                 wrong = request.form['wrong']
                 print played,wrong,correct
-                row.append("played")
+                row.append("Scenario_Played")
                 row.append(played)
-                row.append("correct")
+                row.append("Correct_Identification")
                 row.append(correct)
-                row.append("wrong")
+                row.append("Wrong_Identification")
                 row.append(wrong)
                 save(row)
                 print "finish saving"
                 del row[:]
-                Information=False
-                form=InformationForm()
-                return render_template('home.html',form=form)
+                return render_template('testing.html',form=testform)
         else:
             return render_template('testing.html',form=testform)
 
