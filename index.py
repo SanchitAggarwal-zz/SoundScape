@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash
 from forms import InformationForm,TestForm,TrainingForm
+import datetime
 import csv
 import synthesis
 #import xlwt
@@ -33,6 +34,7 @@ def home():
             row.append(form.blindtype.data)
             row.append(form.email.data)
             row.append(form.contact.data)
+            row.append(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
             save(row)
             del row[:]
             #.gender.choices[form.gender.data])
