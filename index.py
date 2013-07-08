@@ -33,7 +33,9 @@ def home():
             row.append(form.blindtype.data)
             row.append(form.email.data)
             row.append(form.contact.data)
-            #save(row)#.gender.choices[form.gender.data])
+            save(row)
+            del row[:]
+            #.gender.choices[form.gender.data])
             global Information
             Information= True
             trainingform=TrainingForm()
@@ -66,32 +68,52 @@ def training():
 def testing():
     testform=TestForm()
     global Information
-    if Information:
+    if not Information:
+        form=InformationForm()
+        return render_template('home.html',form=form)
+    else:
         if request.method == 'POST':
-            print "saving"
-            '''played = request.form.get('sample')
+            if 'check' in request.form:
+                print "checking"
+                actual = request.form['actual']
+                predicted = request.form['predicted']
+                error = request.form['error']
+                row.append("actual")
+                row.append(actual)
+                row.append("predicted")
+                row.append(predicted)
+                row.append("error")
+                row.append(error)
+                save(row)
+                print "finish checking"
+                del row[:]
+                return render_template('testing.html',form=testform)
+            else:
+                print "saving"
+                played = request.form['sample']
+                correct = request.form['correct']
+                wrong = request.form['wrong']
+                print played,wrong,correct
+                row.append("played")
+                row.append(played)
+                row.append("correct")
+                row.append(correct)
+                row.append("wrong")
+                row.append(wrong)
+                save(row)
+                print "finish saving"
+                del row[:]
+                Information=False
+                form=InformationForm()
+                return render_template('home.html',form=form)
+        else:
+            return render_template('testing.html',form=testform)
+
+
+'''played = request.form.get('sample')
             correct = request.form.get('correct')
             wrong = request.form.get('wrong')#request.form['wrong']
             '''
-            played = request.form['sample']
-            correct = request.form['correct']
-            wrong = request.form['wrong']
-            print played,wrong,correct
-            row.append(played)
-            row.append(correct)
-            row.append(wrong)
-            save(row)
-            print "finish saving"
-            del row[:]
-            Information=False
-            form=InformationForm()
-            return render_template('home.html',form=form)
-        return render_template('testing.html',form=testform)
-    else:
-        form=InformationForm()
-        return render_template('home.html',form=form)
-
-
 if __name__ == '__main__':
     app.run(debug=True)
     #app.run(host="0.0.0.0")

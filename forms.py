@@ -25,7 +25,7 @@ class TestForm(Form):
     actual=TextField("Actual")
     error=TextField("Error")
     save = SubmitField("Save")
-
+    check=SubmitField("Check")
 
 class TrainingForm(Form):
     done = SubmitField("Go For Testing")

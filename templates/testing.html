@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
   <h2>Testing</h2>
-  <p>Play the Sound and then Select the X, Y and Z axis</p>
+  <fieldset>
+            <legend>Set initial Volume(1-10)</legend>
+            <label for="volume">Volume (1-10)</label>
+            <input name="volume" min="1" max="10" type="range" step="1" value="5" onchange="updateAmplitude(this.value);"/>
+  </fieldset>
    <fieldset>
-            <legend>Two Continuous Tone with difference in Pitch, or Volume, or stereo</legend>
+            <legend>Click on Play and then Select the Scenario</legend>
             <table>
                  <tr>
                      <td><button onclick="ScenarioTesting(1);">Play</button></td>
@@ -11,25 +15,24 @@
                  </tr>
                  <tr>
                      <td><input type="radio" name="scenarioTest" value="1" onchange="ScenarioTesting(3);"/>Decreasing Pitch</td>
-                     <td><input type="radio" name="scenarioTest" value="2" onchange="ScenarioTesting(3);"/>Increase Pitch</td>
-                 </tr>
-                 <tr>
                      <td><input type="radio" name="scenarioTest" value="3" onchange="ScenarioTesting(3);"/>Decrease Volume</td>
-                     <td><input type="radio" name="scenarioTest" value="4" onchange="ScenarioTesting(3);"/>Increase Volume</td>
+                     <td><input type="radio" name="scenarioTest" value="5" onchange="ScenarioTesting(3);"/>Left to Right Speaker</td>
                  </tr>
                  <tr>
-                     <td><input type="radio" name="scenarioTest" value="5" onchange="ScenarioTesting(3);"/>Left to Right Speaker</td>
+                     <td><input type="radio" name="scenarioTest" value="2" onchange="ScenarioTesting(3);"/>Increase Pitch</td>
+                     <td><input type="radio" name="scenarioTest" value="4" onchange="ScenarioTesting(3);"/>Increase Volume</td>
                      <td><input type="radio" name="scenarioTest" value="6" onchange="ScenarioTesting(3);"/>Right to Left Speaker</td>
                  </tr>
             </table>
 
    </fieldset>
-   <fieldset>
-                <legend>Generate The Sample and select corresponding X,Y,Z and Click Check Button for Result</legend>
+  <fieldset>
+                <legend>Generate The Sample and select corresponding X,Y,Z and Click Check to Predict the Result</legend>
                 <table>
                 <tr>
-                    <td><button onclick="generate();">Play</button></td>
-                    <td> <button onclick="replay();">Replay</button></td>
+                    <td><button name="Play" onclick="generate();">Play</button></td>
+                    <td> <button name="Replay" onclick="replay();">Replay</button></td>
+                    <!--<button onclick="testing();">Check</button></td>-->
                 </tr>
                 </table>
    </fieldset>
@@ -40,7 +43,7 @@
                     <input type="radio" name="X" value="-3" />-3
                     <input type="radio" name="X" value="-2" />-2-->
                     <input type="radio" name="X" value="-1" />-1
-                    <input type="radio" name="X" value="0" checked = "checked"/>0
+                    <input type="radio" name="X" value="0"  />0
                     <input type="radio" name="X" value="1" />1
                     <!--<input type="radio" name="X" value="2" />2
                     <input type="radio" name="X" value="3" />3
@@ -49,7 +52,7 @@
    </fieldset>
   <fieldset>
                 <legend>Y axis or Pitch (1-Lowest, 11-Highest)</legend>
-                        <input type="radio" name="Y" value="1" checked = "checked"/>1
+                        <input type="radio" name="Y" value="1" />1
                         <input type="radio" name="Y" value="2" />2
                         <input type="radio" name="Y" value="3" />3
                         <input type="radio" name="Y" value="4" />4
@@ -63,7 +66,7 @@
     </fieldset>
   <fieldset>
                 <legend>Z axis or Volume (1-Lowest, 11-Highest)</legend>
-                        <input type="radio" name="Z" value="1" checked = "checked"/>1
+                        <input type="radio" name="Z" value="1" />1
                         <input type="radio" name="Z" value="2" />2
                         <input type="radio" name="Z" value="3" />3
                         <input type="radio" name="Z" value="4" />4
@@ -75,56 +78,21 @@
                         <input type="radio" name="Z" value="10" />10
                         <input type="radio" name="Z" value="11" />11<br>
     </fieldset>
-
-    <table>
-        <tr>
-            <td><button onclick="testing();">Check</button></td>
-            <!--<td><label for="Actual">Actual Sample (X-Y-Z)</label></td>
-            <td><input id="Actual" name="Actual"  type="text" ></td>
-            <td><label for="Predicted">Predicted Sample (X-Y-Z)</label></td>
-            <td><input id="Predicted" name="Predicted"  type="text"></td>
-            <td><label for="Error">Error (X-Y-Z)</label></td>
-            <td><input id="Error" name="Error"  type="text"></td>
-            -->
-        </tr>
-    </table>
     <form action="{{ url_for('testing') }}" method=post id="testForm">
-    <fieldset>
-        <legend>Actual and Predicted Sample (X Y Z) and Error (X Y Z)</legend>
-        <table>
 
-        <!--<tr>
-            <td><label for="sample">Samples Played</label></td>
-            <td><input id="sample" name="sample"  type="text" disabled></td>
-            <td><label for="correct">Correct</label></td>
-            <td><input id="correct" name="correct" type="text" disabled></td>
-            <td><label for="wrong">Wrong</label></td>
-            <td><input id="wrong" name="wrong" type="text" disabled></td>
-         </tr>-->
+    <fieldset>
+        <legend>Actual, Predicted Sample and Error (X Y Z)</legend>
+        <table>
         <tr><td>{{ form.hidden_tag() }}</td></tr>
 
         <tr>
                 <td>{{ form.actual.label }}</td>
-                <td>{{ form.actual (disabled=true)}}</td>
+                <td>{{ form.actual }}</td>
                 <td>{{ form.predicted.label }}</td>
-                <td>{{ form.predicted (disabled=true)}}</td>
+                <td>{{ form.predicted }}</td>
                 <td>{{ form.error.label }}</td>
-                <td>{{ form.error (disabled=true)}}</td>
+                <td>{{ form.error }}</td>
         </tr>
-        </table>
-    </fieldset>
-<!--    <fieldset>
-        <legend>Error (X Y Z)</legend>
-        <table>
-            <tr>
-
-                <td>{{ form.error.label }}</td>
-                <td>{{ form.error (disabled=true)}}</td>
-
-        </tr>
-        </table>
-    </fieldset>-->
-    <table>
         <tr>
             <td>{{ form.sample.label }}</td>
             <td>{{ form.sample }}</td>
@@ -133,9 +101,12 @@
             <td>{{ form.wrong.label }}</td>
             <td>{{ form.wrong }}</td>
         </tr>
-        <tr><td>{{ form.save }}</td></tr>
-
-    </table>
+        <tr>
+            <td>{{ form.check (onclick="testing();") }}</td>
+            <td>{{ form.save }}</td>
+        </tr>
+        </table>
+    </fieldset>
   </form>
 {% endblock %}
 

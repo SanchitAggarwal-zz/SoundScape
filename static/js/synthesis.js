@@ -12,7 +12,7 @@
 
 var pitch = [440,466,494,523,554,587,622,659,698,740,784,831,880];   //predefined notes in hz
 var rate=44100; //sample per sec
-var amplitude=1; //amplitude of sine wave
+var amplitude=5; //amplitude of sine wave
 var testpoint=new Point();
 var PntA=new Point();
 var PntB=new Point();

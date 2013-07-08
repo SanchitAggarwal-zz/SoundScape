@@ -55,15 +55,13 @@
                         <table>
                             <tr>
                                 <td><button onclick="RandomTraining(1);">Decreasing Pitch</button></td>
-                                <td><button onclick="RandomTraining(2);">Increasing Pitch</button></td>
+                                <td><button onclick="RandomTraining(3);">Decreasing Amplitude</button></td>
+                                <td><button onclick="RandomTraining(5);">Left to Right Speaker</button></td>
                             </tr>
                             <tr>
-                                <td><button onclick="RandomTraining(3);">Decreasing Amplitude</button></td>
+                                <td><button onclick="RandomTraining(2);">Increasing Pitch</button></td>
                                 <td><button onclick="RandomTraining(4);">Increasing Amplitude</button></td>
-                            </tr>
-                                <td><button onclick="RandomTraining(5);">Left to Right Speaker</button></td>
                                 <td><button onclick="RandomTraining(6);">Right to Left Speaker</button></td>
-                            </tr>
                         </table>
     </fieldset>
     <form action="{{ url_for('training') }}" method=post>
@@ -83,7 +81,3 @@
     <button onclick="document.getElementById('player').volume += 0.1">Vol+ </button>
     <button onclick="document.getElementById('player').volume -= 0.1">Vol- </button>
     </div>-->
-  <!--<fieldset>
-                <legend>Generate The Corresponding Tone for selected X,Y,Z</legend>
-                <button onclick="training();">Play</button>
-    </fieldset>-->
